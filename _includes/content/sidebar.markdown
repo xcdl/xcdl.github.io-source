@@ -9,4 +9,8 @@
 #### Reference
 * [The XCDL definitions reference]({{ site.baseurl }}/guide/definitions-reference/)
 
+#### License
+
+* [GPL](https://www.gnu.org/licenses/gpl.html)
+
 #### [About]({{ site.baseurl }}/about/)

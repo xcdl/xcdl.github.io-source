@@ -43,11 +43,11 @@ The first goal was to write a plug-in to manage the existing [Keil CMSIS package
 
 ### June 23rd, 2014
 
-A more or less complete set of specifications, based on *The eCos Component Writer’s Guide*, with multiple changes, was put together on this wiki.
+A more or less complete set of specifications, based on *The eCos Component Writer’s Guide*, with multiple changes, was put together on the XCDL MediaWiki site.
 
 ### August 25th, 2015
 
-The project wiki was migrated to GitHub Wiki. The initial version is still available from [SourceForge](http://xcdl.sourceforge.net/wiki/)
+The project wiki was migrated to GitHub Wiki. The initial version is still available from [SourceForge](http://xcdl.sourceforge.net/wiki/).
 
 ### Oct 15th, 2015
 
