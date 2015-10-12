@@ -1,6 +1,6 @@
 ---
 layout: page
-permalink: /cmsis-remarks/
+permalink: /criticism/cmsis/
 title: CMSIS Pack remarks and criticism
 author: Liviu Ionescu
 ---

@@ -1,6 +1,6 @@
 ---
 layout: page
-permalink: /build-process/
+permalink: /guide/build-process/
 title: The build process
 author: Liviu Ionescu
 ---

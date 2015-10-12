@@ -1,6 +1,6 @@
 ---
 layout: page
-permalink: /xcdl-remarks/
+permalink: /criticism/xcdl/
 title: XCDL remarks and criticism
 author: Liviu Ionescu
 ---

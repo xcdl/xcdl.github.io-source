@@ -11,6 +11,7 @@ destination: _site
 exclude:
   - README.md
   - jekyll-serve.command
+  - jekyll-build.command
 
 # Used in sitemap.xml.
 url: "http://ilg-ul.github.io" # the base hostname & protocol for your site.
@@ -31,7 +32,14 @@ permalink: /blog/:year/:month/:day/:title/
 markdown: redcarpet
 
 redcarpet:
-  extensions: []
+  extensions:
+    - no_intra_emphasis
+    - tables
+    - fenced_code_blocks
+    - autolink
+    - strikethrough
+    - superscript
+    - highlight
 
 # Warning: paginator retired in Jekyll 3!
 # Make this larger, probably 5 is a good choice.
@@ -58,16 +66,16 @@ gems:
 
 # References to the project associated with the web.
 github-username:  ilg-ul
-github-project-name: xcdl/xcdl
-github-project-url: http://github.com/xcdl/xcdl
+github-project-name: xcdl/xcdl-go
+github-project-url: http://github.com/xcdl/xcdl-go
 
 # Change it to refer to project's page
-facebook-url: https://facebook.com/ilg-ul/
+# facebook-url: https://facebook.com/ilg-ul/
 
-twitter-url: http://twitter.com/ilegeul
+# twitter-url: http://twitter.com/ilegeul
 
 # If you have one, define it here.
-# google-analytics-id: UA-000000-01
+google-analytics-id: UA-16767008-13
 
 # Disable it if no site footer is needed.
 # custom-footer-content: content/site-custom-footer.markdown
@@ -76,7 +84,7 @@ twitter-url: http://twitter.com/ilegeul
 tocTopTag: h2
 minItemsToShowToc: 3
 
-css-date: 201510060914
+css-date: 201510121951
 
 # Content copyright. Update it to your needs.
 copyright-message: "© 2015 Liviu Ionescu"

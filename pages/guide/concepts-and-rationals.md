@@ -1,6 +1,6 @@
 ---
 layout: page
-permalink: /concepts-and-rationals/
+permalink: /guide/concepts-and-rationals/
 title: XCDL concepts and rationals
 author: Liviu Ionescu
 ---

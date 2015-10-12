@@ -1,6 +1,6 @@
 ---
 layout: page
-permalink: /packages/
+permalink: /guide/packages/
 title: XCDL packages
 author: Liviu Ionescu
 ---

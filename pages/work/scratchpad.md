@@ -1,6 +1,6 @@
 ---
 layout: page
-permalink: /scratchpad/
+permalink: /work/scratchpad/
 title: Scratchpad
 author: Liviu Ionescu
 ---

@@ -1,8 +1,10 @@
 ---
 layout: page
-permalink: /definitions-reference/
+permalink: /guide/definitions-reference/
 title: The XCDL definitions reference
 author: Liviu Ionescu
+
+tocLevels: 1
 ---
 
 ## Introduction

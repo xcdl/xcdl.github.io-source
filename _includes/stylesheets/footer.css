@@ -6,7 +6,7 @@
   font-size: 12px;
   line-height: 1.5;
   color: #767676;
-  border-top: 1px solid #eee;
+  border-top: 1px solid #D8D8D8; /* #eee; */
 }
 
 .site-footer:before {

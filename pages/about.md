@@ -47,8 +47,8 @@ A more or less complete set of specifications, based on *The eCos Component Writ
 
 ### August 25th, 2015
 
-The project wiki was migrated to GitHub Wiki.
+The project wiki was migrated to GitHub Wiki. The initial version is still available from [SourceForge](http://xcdl.sourceforge.net/wiki/)
 
 ### Oct 15th, 2015
 
-The GitHub Wiki pages were migrated to GitHub Pages.
+The GitHub Wiki pages were migrated to [GitHub Pages](http://xcdl.github.io).

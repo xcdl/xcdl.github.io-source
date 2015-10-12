@@ -1,6 +1,6 @@
 ---
 layout: page
-permalink: /language/
+permalink: /guide/language/
 title: The XCDL language
 author: Liviu Ionescu
 ---

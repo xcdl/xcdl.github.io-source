@@ -1,6 +1,6 @@
 ---
 layout: page
-permalink: /ecos-remarks/
+permalink: /criticism/ecos/
 title: eCos CDL remarks and criticism
 author: Liviu Ionescu
 ---

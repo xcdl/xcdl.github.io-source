@@ -7,7 +7,9 @@ author: Liviu Ionescu
 
 ## Introduction
 
-The XCDL project defines an **eXtensible Component Definition Language** (CDL) and implements tools based on it to configure and build complex, package based, multi-variant (multi-architecture, multi-board, multi-toolchain) embedded projects. It is inspired by eCos CDL and also plans to incorporate some ARM CMSIS Pack concepts. The primary projects to benefit from XCDL are [µOS++ IIIe](http://micro-os-plus.livius.net/) (as content for the components), [xPacks](https://github.com/xpacks) (as repository for packs) and [GNU ARM Eclipse](http://gnuarmeclipse.github.io/)  (as graphical tools to manage the components).
+The [XCDL project](https://github.com/xcdl) defines an **eXtensible Component Definition Language** (CDL) and implements tools to configure and build complex, package based, multi-variant (multi-architecture, multi-board, multi-toolchain) embedded projects. It is inspired by eCos CDL and also plans to incorporate some ARM CMSIS Pack concepts. The primary projects to benefit from XCDL are [µOS++ IIIe](http://micro-os-plus.livius.net/) (as content for the components), [xPacks](https://github.com/xpacks) (as repository for packs) and [GNU ARM Eclipse](http://gnuarmeclipse.github.io/)  (as graphical tools to manage the components).
+
+This project is hosted on [GitHub](https://github.com/xcdl).
 
 ## Credits
 
@@ -23,15 +25,15 @@ Although targeted to Eclipse, these specifications should not prevent other deve
 
 ## Component Writer's Guide
 
-* [XCDL concepts and rationals]({{ site.baseurl }}/concepts-and-rationals/)
-* [XCDL packages]({{ site.baseurl }}/packages/)
-* [The XCDL language]({{ site.baseurl }}/language/)
-* [The build process]({{ site.baseurl }}/build-process/) (not yet updated for XCDL)
+* [XCDL concepts and rationals]({{ site.baseurl }}/guide/concepts-and-rationals/)
+* [XCDL packages]({{ site.baseurl }}/guide/packages/)
+* [The XCDL language]({{ site.baseurl }}/guide/language/)
+* [The build process]({{ site.baseurl }}/guide/build-process/) (not yet updated for XCDL)
 * The XCDL graphical tools
 
 ## Reference
 
-* [The XCDL definitions reference]({{ site.baseurl }}/definitions-reference/)
+* [The XCDL definitions reference]({{ site.baseurl }}/guide/definitions-reference/)
 * The XCDL command line tools reference
 
 ## SRS
@@ -42,17 +44,20 @@ Although targeted to Eclipse, these specifications should not prevent other deve
 
 TBD
 
+## Work in progress
+
+* [Scratchpad]({{ site.baseurl }}/work/scratchpad/)
+* [Preprocessor]({{ site.baseurl }}/work/preprocessor/)
+
 ## License
 
-The XCDL software is released under the [MIT License](http://en.wikipedia.org/wiki/MIT_License).
+The XCDL software is released under the [GPL License](https://www.gnu.org/licenses/gpl.html).
 
 ## Miscellaneous
 
-* [eCos CDL remarks and criticism]({{ site.baseurl }}/ecos-remarks/)
-* [CMSIS Pack remarks and criticism]({{ site.baseurl }}/cmsis-remarks/)
-* [XCDL remarks and criticism]({{ site.baseurl }}/xcdl-remarks/)
-* [Project history]({{ site.baseurl }}/project-history/)
-* [Scratchpad]({{ site.baseurl }}/scratchpad/)
+* [eCos CDL remarks and criticism]({{ site.baseurl }}/criticsm/ecos/)
+* [CMSIS Pack remarks and criticism]({{ site.baseurl }}/criticsm/cmsis/)
+* [XCDL remarks and criticism]({{ site.baseurl }}/criticsm/xcdl/)
 
 ## References
 

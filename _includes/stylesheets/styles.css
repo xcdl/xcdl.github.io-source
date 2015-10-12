@@ -192,7 +192,7 @@ input, select, textarea, button {
 body {
     font: 13px/1.4 Helvetica, arial, nimbussansl, liberationsans, freesans, clean, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol";
     color: #333;
-    background-color: #fff;
+    background-color: #FFFFFF;
 }
 
 a {
@@ -210,7 +210,7 @@ hr, .rule {
     overflow: hidden;
     background: transparent;
     border: 0;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid #D8D8D8;
 }
 
 hr:before, .rule:before {
@@ -397,7 +397,7 @@ body > .container:first-child {
     padding-bottom: 0.3em;
     font-size: 2.25em;
     line-height: 1.2;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid #D8D8D8; /* #eee; */
 }
 
 .wrapper h1 .anchor {
@@ -408,7 +408,7 @@ body > .container:first-child {
     padding-bottom: 0.3em;
     font-size: 1.75em;
     line-height: 1.225;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid #D8D8D8; /* #eee; */
 }
 
 .wrapper h2 .anchor {
@@ -459,7 +459,7 @@ body > .container:first-child {
     height: 4px;
     padding: 0;
     margin:25px 0 20px;
-    background-color: #e7e7e7;
+    background-color: #E8E8E8; /* #e7e7e7; */
     border: 0 none;
 }
 
@@ -501,7 +501,7 @@ body > .container:first-child {
 .wrapper blockquote {
     padding: 0 15px;
     color: #777;
-    border-left: 4px solid #ddd;
+    border-left: 4px solid #E8E8E8;
 }
 
 .wrapper blockquote>:first-child {
@@ -527,16 +527,15 @@ body > .container:first-child {
 
 .wrapper table th, .wrapper table td {
     padding: 6px 13px;
-    border: 1px solid #ddd;
+    border: 1px solid #D8D8D8;
 }
 
 .wrapper table tr {
-    background-color: #fff;
-    border-top: 1px solid #ccc;
+    border-top: 1px solid #D8D8D8; /* #ccc; */
 }
 
 .wrapper table tr:nth-child(2n) {
-    background-color: #f8f8f8;
+    background-color: #F8F8F8; /* #f8f8f8; */
 }
 
 .wrapper img {
@@ -560,7 +559,7 @@ body > .container:first-child {
     padding: 7px;
     margin: 13px 0 0;
     overflow: hidden;
-    border: 1px solid #ddd;
+    border: 1px solid #D8D8D8;
 }
 
 .wrapper span.frame span img {
@@ -642,7 +641,7 @@ body > .container:first-child {
     padding-bottom: 0.2em;
     margin: 0;
     font-size: 85%;
-    background-color: rgba(0, 0, 0, 0.04);
+    background-color: #F4F4F4; /* rgba(0, 0, 0, 0.04); */
     border-radius: 3px;
 }
 
@@ -678,7 +677,7 @@ body > .container:first-child {
     overflow: auto;
     font-size: 85%;
     line-height: 1.45;
-    background-color: #f7f7f7;
+    background-color: #F4F4F4; /* #f7f7f7; */
     border-radius: 3px;
 }
 
@@ -714,22 +713,20 @@ body > .container:first-child {
     line-height: 10px;
     color: #555;
     vertical-align: middle;
-    background-color: #fcfcfc;
-    border: solid 1px #ccc;
-    border-bottom-color: #bbb;
+    background-color: #F0F0F0; /* #fcfcfc; */
+    border: solid 1px #D8D8D8; /* #ccc; */
+    border-bottom-color: #D8D8D8; /* #bbb; */
     border-radius: 3px;
-    box-shadow: inset 0 -1px 0 #bbb;
+    box-shadow: inset 0 -1px 0 #D8D8D8; /* #bbb; */
 }
 
 /* ---------------------------------*/
 
 .boxed-group-inner {
   margin: 0px 0px 20px 0px;
-  border: 1px solid #d8d8d8;
-  border-bottom-left-radius: 3px;
-  border-bottom-right-radius: 3px;
-  border-top-left-radius: 3px;
-  border-top-right-radius: 3px;
+  border: 1px solid #D8D8D8; /* #d8d8d8; */
+  background-color: #FCFCFC;
+  border-radius: 3px;
   font-size: 13px;
 }
 
@@ -739,7 +736,7 @@ body > .container:first-child {
 }
 
 .site-header {
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid #D8D8D8; /* #eee; */
   width: 100%;
   margin-bottom: 20px;
   padding-bottom: 10px;
@@ -805,21 +802,23 @@ h1.post-title  {
   padding-bottom: 5px;
   font-size: 1.6em;
   line-height: 1.2;
-  border-color: #eee;
+  border-color: #D8D8D8; /* #eee; */
 }
+
 .custom-sidebar h2 {
   padding-bottom: 5px;
   font-size: 1.4em;
   line-height: 1.2;
-  border-color: #eee;
+  border-color: #D8D8D8; /* #eee; */
 }
+
 .custom-sidebar h3,
 .custom-sidebar h4,
 .custom-sidebar h5,
 .custom-sidebar h6 {
   font-size: 1.2em;
   line-height: 1.2;
-  border-color: #eee;
+  border-color: #D8D8D8; /* #eee; */
 }
 
 .custom-sidebar .boxed-group-inner>:nth-child(1) {
@@ -832,7 +831,7 @@ h1.post-title  {
 
 .custom-sidebar .boxed-group-inner {
   padding: 10px 10px 10px 10px;
-  border: solid 1px #e2e2e2;
+  border: solid 1px #D8D8D8; /* #e2e2e2; */
 }
 
 .custom-sidebar p:last-child,
@@ -850,7 +849,7 @@ h1.post-title  {
 p.last-modified {
   font-size: 80%;
   padding-top: 5px;
-  border-top: 1px solid #eee;
+  border-top: 1px solid #D8D8D8; /* #eee; */
 }
 
 
