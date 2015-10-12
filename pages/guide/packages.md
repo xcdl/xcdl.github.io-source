@@ -5,16 +5,17 @@ title: XCDL packages
 author: Liviu Ionescu
 ---
 
-For a package to be usable in the XCDL component framework it must conform to certain rules imposed by that framework. Packages must be distributed in a form that is understood by the component repository administration tool. There must be a top-level XCDL file which describes the package to the component framework. There are certain limitations related to how a package gets built, so that the package can still be used in a variety of host environments. In addition to these rules, the component framework provides a number of guidelines. It is not mandatory for the packages to strictly conform to these guidelines, but sticking to them can simplify certain operations.
+For a package to be usable in the XCDL component framework it must conform to certain rules imposed by the framework. Packages must be distributed in a form that is understood by the component repository administration tool. For each package there must be a top-level XCDL file which describes the package to the component framework. There are certain portability requirements related to how a package gets built, so that the package can be used in a variety of host environments. In addition to these rules, the component framework provides a number of guidelines. It is not mandatory for the packages to strictly conform to all guidelines, but sticking to them can simplify certain operations.
 
-Repositories
-------------
+## Component repositories
+
+Generally a component repository is a managed collection of packages.
 
 ### Packages and the local component repository
 
-All development tools using XCDL packages include a local component repository. Similarly to the CMSIS Pack repository, this is a local folder structure where all installed packages are located. The component framework comes with an administration tool that allows new packages or new versions of a package to be installed, old packages to be removed, and so on. Each package has its own little directory hierarchy within the component repository. Keeping several packages in a single directory is illegal.
+All development tools using XCDL packages include a local component repository. Similarly to the CMSIS Pack repository, this is a local folder structure where all installed packages are located. The component framework comes with an administration tool that allows new packages or new versions of a package to be installed, old packages to be removed, and so on. Each package has its own folder hierarchy within the component repository. Keeping several packages in a single folder is illegal.
 
-To better accommodate the package separation for multi-vendor cases, the local folder hierarchy start with a folder with the vendor name.
+To better accommodate the package separation for multi-vendor cases, the local folder hierarchy start with a folder with the vendor/originator name.
 
     Packages/
     ├── ARM
@@ -67,10 +68,9 @@ Since these development folders are usually linked to revision control systems (
 
 For obvious reasons, contrary to the other files in the local repository, these files are not set to read/only.
 
-TODO: define details
+TODO: define details >>>>>>>>>>>>>>>>
 
-Repository content brief
-------------------------
+## Repository content brief
 
 For each remote repository there is a summary content file enumerating the public packages with their full URLs and just enough information to build a brief outline of the package.
 
@@ -192,8 +192,7 @@ An example of such file is presented below:
       </repository>
     </root>
 
-Package versioning
-------------------
+## Package versioning
 
 Below each package directory there can be one or more version sub-directories, named after the versions. This is a requirement of the component framework: it must be possible for users to install multiple versions of a package and select which one to use for any given application. This has a number of advantages to users: most importantly it allows a single component repository to be shared between multiple users and multiple projects, as required; also it facilitates experiments, for example it is relatively easy to try out the latest version of some package and see if it makes any difference. There is a potential disadvantage in terms of disk space. However since XCDL packages generally consist of source code intended for small embedded systems, and given typical modern disk sizes, keeping a number of different versions of a package installed will usually be acceptable. The administration tool can be used to remove versions that are no longer required.
 
@@ -208,8 +207,7 @@ The version *current* is special. Typically it corresponds to the very latest ve
 
 All other subdirectories of a package correspond to specific releases of that package. The component framework allows users to select the particular version of a package they want to use, but by default the most recent one will be used. This requires some rules for ordering version numbers, a difficult task because of the wide variety of ways in which versions can be identified.
 
-Package contents and layout
----------------------------
+## Package contents and layout
 
 A typical package contains the following:
 
@@ -223,8 +221,8 @@ It is also conventional to have a per-package *ChangeLog* file used to keep trac
 
 Any given packages need not contain all of these. It is compulsory to have at least one XCDL file describing the package, otherwise the component framework would be unable to process it. The name of this file is fixed and the component framework will search for it in two locations, in the following order:
 
-    package_root/meta/xcdl.xml
-    package_root/xcdl.xml
+    ${package_root}/meta/xcdl.xml
+    ${package_root}/xcdl.xml
 
 Some packages may not have any source code: it is possible to have a package that merely defines a common interface which can then be implemented by several other packages, especially in the context of device drivers; however it is still common to have some code in such packages to avoid replicating shareable code in all of the implementation packages. Similarly it is possible to have a package with no exported header files, just source code that implements an existing interface: for example an ethernet device driver might just implement a standard interface and not provide any additional functionality. Packages do not need to come with any on-line documentation, although this may affect how many people will want to use the package. Much the same applies to per-package test cases.
 
@@ -438,8 +436,7 @@ At the time of writing the application developer support for building and runnin
 
 On occasion it would be useful for an XCDL package to be shipped with host-side support. This could take the form of an additional tool needed to build that package. It could be an application intended to communicate with the target-side package code and display monitoring information. It could be a utility needed for running the package test cases, especially in the case of device drivers. The component framework does not yet provide any such support for host-side software, and there are obvious issues related to portability to the different machines that can be used for hosts. This issue may get addressed in some future release. In some cases custom build steps can be subverted to do things on the host side rather than the target side, but this is not recommended.
 
-Making a package distribution
------------------------------
+## Making a package distribution
 
 Developers of new XCDL packages are advised to distribute their packages in the form of XCDL package distribution files. Packages distributed in this format may be added to existing XCDL component repositories in a robust manner using the Package Administration Tool. This chapter describes the format of package distribution files and details how to prepare an eCos package for distribution in this format.
 
@@ -462,7 +459,6 @@ TODO: update for XCDL, this currently refers to eCos
 
 TODO: define the procedure to pack the content of a package folder to an archive.
 
-Credits
--------
+## Credits
 
 The initial content of this page was based on *Chapter 2. Package Organizaion* of *The eCos Component Writer’s Guide*, by Bart Veer and John Dallaway, published in 2001.
