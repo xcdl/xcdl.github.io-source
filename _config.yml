@@ -31,7 +31,11 @@ encoding: utf-8
 permalink: /blog/:year/:month/:day/:title/
 
 # Build settings.
-markdown: redcarpet
+markdown: kramdown
+# markdown: redcarpet
+
+kramdown:
+  input: GFM
 
 redcarpet:
   extensions:
@@ -42,6 +46,8 @@ redcarpet:
     - strikethrough
     - superscript
     - highlight
+    - with_toc_data
+    - safe_links_only
 
 # Warning: paginator retired in Jekyll 3!
 # Make this larger, probably 5 is a good choice.
