@@ -55,9 +55,9 @@ The XCDL software is released under the [GPL License](https://www.gnu.org/licens
 
 ## Remarks and criticism
 
-* [eCos CDL]({{ site.baseurl }}/criticsm/ecos/)
-* [CMSIS Pack]({{ site.baseurl }}/criticsm/cmsis/)
-* [XCDL]({{ site.baseurl }}/criticsm/xcdl/)
+* [eCos CDL]({{ site.baseurl }}/criticism/ecos/)
+* [CMSIS Pack]({{ site.baseurl }}/criticism/cmsis/)
+* [XCDL]({{ site.baseurl }}/criticism/xcdl/)
 
 ## References
 
