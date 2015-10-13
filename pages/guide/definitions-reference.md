@@ -61,7 +61,7 @@ If active and enabled, `<option>` can generate preprocessor `#define` lines in a
 ### Optional properties
 
  -   `<activeIf>` - a list of expressions to be evaluated; if all are true, the active state of this option remains true
- -   `<category>` - provides additional grouping information, to allow a configuration tool to provide appropriate selection (board | synthetic | root | architecture | family)
+ -   `<category>` - provides additional grouping information, to allow a configuration tool to provide appropriate selection (board \| synthetic \| root \| architecture \| family)
  -   `<computed>` - the option’s value is not directly user-modifiable, it is calculated using a suitable expression
  -   `<configurable>` - a boolean expression that provides additional information to a configuration tool, to control if this option can be enabled/disabled by the user during the configuration process
  -   `<defaultEnabled>` - a boolean expression that provides an initial value for the option enabled/disabled state
@@ -351,7 +351,7 @@ The interface *kernel/scheduler* is implemented by both the mlqueue and bitmap s
 
 Some component writers may prefer to use the first `<requires>` constraint on the grounds that the code will only have been tested with the mlqueue and bitmap schedulers and cannot be guaranteed to work with any new schedulers. Other component writers may take a more optimistic view and assume that their code will work with any scheduler until proven otherwise.
 
-<interface> is defined a XML element that has one name attribute and a body. Within a single configuration, names must be unique. If a configuration contained two packages which defined the same entity, any references to that entity in a `<requires>` property or any other expression would be ambiguous. It is possible for a given name to be used by two different packages if those packages should never be loaded into a single configuration. For example, architectural HAL packages are allowed to reuse names because a single configuration cannot target two different architectures. For a recommended naming convention see the Section called Package Contents and Layout in [XCDL packages](/XCDL_packages).
+`<interface>` is defined a XML element that has one name attribute and a body. Within a single configuration, names must be unique. If a configuration contained two packages which defined the same entity, any references to that entity in a `<requires>` property or any other expression would be ambiguous. It is possible for a given name to be used by two different packages if those packages should never be loaded into a single configuration. For example, architectural HAL packages are allowed to reuse names because a single configuration cannot target two different architectures. For a recommended naming convention see the Section called Package Contents and Layout in [XCDL packages](/XCDL_packages).
 
 A commonly used constraint on interface values takes the form:
 

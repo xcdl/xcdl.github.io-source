@@ -197,7 +197,7 @@ An example of such file is presented below:
 Below each package directory there can be one or more version sub-directories, named after the versions. This is a requirement of the component framework: it must be possible for users to install multiple versions of a package and select which one to use for any given application. This has a number of advantages to users: most importantly it allows a single component repository to be shared between multiple users and multiple projects, as required; also it facilitates experiments, for example it is relatively easy to try out the latest version of some package and see if it makes any difference. There is a potential disadvantage in terms of disk space. However since XCDL packages generally consist of source code intended for small embedded systems, and given typical modern disk sizes, keeping a number of different versions of a package installed will usually be acceptable. The administration tool can be used to remove versions that are no longer required.
 
     Packages/ilg
-    └── Xyzw
+    └── xyzw
         ├── 3.20.3
         ├── 3.20.4
         ├── 4.1.0
@@ -306,27 +306,27 @@ Very occasionally the inability of one package to see implementation details of 
 Configurability usually involves source code that needs to implement different behavior depending on the settings of configuration options. It is possible to write packages where the only consequence associated with various configuration options is to control what gets built, but this approach is limited and does not allow for fine-grained configurability. There are three main ways in which options could affect source code at build time:
 
 1.  The component code can be passed through a suitable preprocessor, either an existing one such as m4 or a new one specially designed with configurability in mind. The original sources would reside in the component repository and the processed sources would reside in the build tree. These processed sources can then be compiled in the usual way.
+
     This approach has two main advantages. First, it is independent from the programming language used to code the components, provided reasonable precautions are taken to avoid syntax clashes between preprocessor statements and actual code. This would make it easier in future to support languages other than C and C++. Second, configurable code can make use of advanced preprocessing facilities such as loops and recursion.
 
     The disadvantage is that component writers would have to learn about a new preprocessor and embed appropriate directives in the code. This makes it much more difficult to turn existing code into components, and it involves extra training costs for the component writers. The extra definitions might also confuse document generating utlities like Doxygen.
 
 2.  Compiler optimizations can be used to elide code that should not be present, for example:
-  ```
-          ...
-          if (OS_INTEGER_NUMBER_UARTS > 0) {
-            ...
-          }
-          ...
-```
 
-  If the compiler knows that OS_INTEGER_NUMBER_UARTS is the constant number 0 then it is a trivial operation to get rid of the unnecessary code. The component framework still has to define this symbol in a way that is acceptable to the compiler, typically by using a const variable or a preprocessor symbol. In some respects this is a clean approach to configurability, but it has limitations:
+        ...
+        if (OS_INTEGER_NUMBER_UARTS > 0) {
+          ...
+        }
+        ...
+
+    If the compiler knows that OS_INTEGER_NUMBER_UARTS is the constant number 0 then it is a trivial operation to get rid of the unnecessary code. The component framework still has to define this symbol in a way that is acceptable to the compiler, typically by using a const variable or a preprocessor symbol. In some respects this is a clean approach to configurability, but it has limitations:
 
     -   it cannot be used in the declarations of data structures or classes, nor does it provide control over entire functions
     -   in addition it may not be immediately obvious that this code is affected by configuration options, which may make it more difficult to understand
     -   even if the condition does not evaluate to true, and the optimiser gets rid of the code, it still requires the elided code to be syntactically correct, which sometimes it is not possible, due to missing references.
 
 3.  Existing language preprocessors can be used. In the case of C or C++ this would be the standard C preprocessor, and configurable code would contain a number of `#ifdef` and `#if` statements.
-  ```
+
         #if defined(OS_DEBUG_INFRA_DEBUG_PRECONDITIONS)
           ...
         #endif
@@ -336,9 +336,8 @@ Configurability usually involves source code that needs to implement different b
         #if (OS_INTEGER_NUMBER_UARTS > 0)
           ...
         #endif
-```
 
-  This approach has the advantage that the C preprocessor is a technology that is both well-understood and widely used. There are also disadvantages: the preprocessing facilities are rather limited; and some people (including ourselves) consider the technology to be ugly, generally decreasing program readability.
+    This approach has the advantage that the C preprocessor is a technology that is both well-understood and widely used. There are also disadvantages: the preprocessing facilities are rather limited; and some people (including ourselves) consider the technology to be ugly, generally decreasing program readability.
 
 #### Preprocessor definitions
 
@@ -350,13 +349,11 @@ The second type of definitions that the component framework should support are *
 
 -   are processed by the compiler, not the preprocessor; this has the advantage of allowing type checks
 -   can be grouped in name spaces; this minimise the risk of name clashes
-
-  ```
-    namespace one
-    {
-      constexpr int variable = 1234;
-    }
-```
+    
+        namespace one
+        {
+          constexpr int variable = 1234;
+        }
 
 It is recommended to use constexpr expressions for all options providing values, and limit the use of preprocessor definitions only to control which parts of the code is included, i.e. definitions like `#if defined(OS_INCLUDE_SOME_FUNCTIONALITY)`.
 

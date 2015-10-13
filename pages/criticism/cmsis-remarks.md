@@ -99,7 +99,7 @@ Perhaps a more visually pleasant solution would have been to use the standard PO
 <compile header="Device/Include/stm32f4xx.h"  define="STM32F40_41xxx"/>
 ```
 
-### <books>
+### `<books>`
 
 Here is an unfortunate example from the STM32F4-Discovery board:
 
@@ -111,7 +111,7 @@ Here is an unfortunate example from the STM32F4-Discovery board:
 <book category="other"     name="Documents\stm32f4discovery_gerber.zip" title="Gerber Files"/>
 ```
 
-First, none of the above is actually a book, all are various documentation files (web page, manuals, schematics, etc), so the name **<books>** is poorly chosen.
+First, none of the above is actually a book, all are various documentation files (web page, manuals, schematics, etc), so the name `<books>` is poorly chosen.
 
 Second, the **name** attribute refers to anything else but the document name, which is eventually defined as **title**.
 
@@ -127,7 +127,7 @@ Perhaps a more appropriate definitions would have been:
 <document category="other"     title="Gerber Files" file="Documents/stm32f4discovery_gerber.zip"/>
 ```
 
-### <algorithm>
+### `<algorithm>`
 
 The **name** attribute does not define any name, but a special .FLM file:
 

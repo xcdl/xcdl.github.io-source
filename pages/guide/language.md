@@ -216,7 +216,7 @@ This type indicates that neither the boolean nor the data parts are user-modifia
 -   `<valueType>none</valueType>` <br>
 This type indicates that only the boolean part is user-modifiable: if active, the option can be enabled/disabled and the data always follow the isEnabled() value. The most common use for this is to have a component that just acts as a placeholder in the hierarchy, allowing various options to be grouped below it. To make the option non user-configurable, use `<configurable>false</configurable>`.
 
--   `<valueType>bool | int | float | string</valueType>` <br>
+-   `<valueType>bool \| int \| float \| string</valueType>` <br>
 Both the boolean and the data part of the option are user-modifiable. To make the boolean part non user-configurable, use `<configurable>false</configurable>`. To make the data part non user-configurable, use `<computed>true</computed>`.
 
 For more details of XCDL flavors and how a flavor affects expression evaluation, and other consequences, see the Section called Values and Expressions.
