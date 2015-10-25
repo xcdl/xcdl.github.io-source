@@ -1,7 +1,7 @@
 ---
 layout: page
-permalink: /guide/definitions-reference/
-title: The XCDL definitions reference
+permalink: /reference/language/
+title: The XCDL language reference
 author: Liviu Ionescu
 
 tocLevels: 1
