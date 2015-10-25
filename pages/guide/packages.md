@@ -5,241 +5,341 @@ title: XCDL packages
 author: Liviu Ionescu
 ---
 
-For a package to be usable in the XCDL component framework it must conform to certain rules imposed by the framework. Packages must be distributed in a form that is understood by the component repository administration tool. For each package there must be a top-level XCDL file which describes the package to the component framework. There are certain portability requirements related to how a package gets built, so that the package can be used in a variety of host environments. In addition to these rules, the component framework provides a number of guidelines. It is not mandatory for the packages to strictly conform to all guidelines, but sticking to them can simplify certain operations.
+For a package to be usable in the XCDL component framework it must conform to certain rules imposed by the framework. Packages must be distributed in a form that is understood by the component repository administration tool. For each package there must be a top-level XCDL metadata file which describes the package to the component framework. There are certain portability requirements related to how a package gets built, so that the package can be used in a variety of host environments. In addition to these rules, the component framework provides a number of guidelines. It is not mandatory for the packages to strictly conform to all guidelines, but sticking to them can simplify certain operations.
 
-## Component repositories
+## Packages
 
-Generally a component repository is a managed collection of packages.
+### What is a package?
 
-### Packages and the local component repository
+Inspired from the [NPM](https://docs.npmjs.com/misc/developers#what-is-a-package) package definition, an XCDL package is:
 
-All development tools using XCDL packages include a local component repository. Similarly to the CMSIS Pack repository, this is a local folder structure where all installed packages are located. The component framework comes with an administration tool that allows new packages or new versions of a package to be installed, old packages to be removed, and so on. Each package has its own folder hierarchy within the component repository. Keeping several packages in a single folder is illegal.
+1. a folder containing a valid `.xpackage.xml` file;
+2. a gzipped tarball containing 1);
+3. a URL that resolves to 2);
+4. a Git URL that, when cloned, results in 1).
 
-To better accommodate the package separation for multi-vendor cases, the local folder hierarchy start with a folder with the vendor/originator name.
+The definition is intentionally Git and JavaScript centric, as these technologies are considered mature and worth considering.
 
-    Packages/
-    ├── ARM
-    ├── ilg
-    ├── Keil
-    ├── Nuvoton
-    ├── lwIP
-    └── wolfSSL
+Although the XCDL language will probably remain based on XML, equivalent definitions can be expressed in JSON, and compatibility with JSON is considered a kind of validation that the definitions are simple and consistent.
 
-Below each vendor there are hierarchies of packages. Unrelated packages are all stored just below the vendor folder.
+### Package contents
 
-    Packages
-    ├── ARM
-    │   └── CMSIS
-    ├── Keil
-    │   ├── ARMCortex_DFP
-    │   ├── MDK-Middleware
-    │   ├── STM32F0xx_DFP
-    │   ├── STM32F1xx_DFP
-    │   ├── STM32F2xx_DFP
-    │   ├── STM32F3xx_DFP
-    │   ├── STM32F4xx_DFP
-    │   ├── STM32L0xx_DFP
-    │   ├── STM32L1xx_DFP
-    │   ├── STM32NUCLEO_BSP
-    │   ├── STM32W1xx_DFP
-    │   └── V2M-MPS2_CMx_BSP
-    ├── lwIP
-    │   └── lwIP
-    └── wolfSSL
-        └── CyaSSL
+In addition to the `.xpackage.xml` metadata file, a typical package contains the following:
 
-After unpacking, the administrative tools change the protection bits of the component files to read/only, to prevent inadvertent changes while using the components.
+*  some number of source files (.c/.cpp) and header files (.h). The project artefact (library or executable) will be created using these files. Some source files may serve other purposes, for example to provide a linker script;
+*  exported header files which define the interface provided by the package;
+*  online documentation, for example reference pages for each exported function;
+*  some number of test cases, shipped in source format, allowing users to check that the package is working as expected on their particular hardware and in their specific configuration;
+*  other XCDL metadata files describing the package to the configuration system.
 
-### Remote/archives repositories
+It is also conventional to have a per-package `ChangeLog` file used to keep track of changes to that package. This is especially valuable to end users of the package who may not have convenient access to the source code control system used to manage the master copy of the package, and hence cannot find out easily what has changed. Often it can be very useful to the main developers as well.
 
-To save space and to simplify management, each XCDL package is packed into a ZIP archive. To make these archives public, the usual method of distribution is via a web server, each archive having its own URL.
-
-### Individual packages
-
-For individually distributed archived packages, the component framework should be able to manage these files, unpack and add their content to the local component repository.
-
-### Git/local development trees
-
-For component developers the usual package life cycle of pack/publish/fetch/unpack is not only useless, but may have a significant impact on the speed of the debug/test cycle.
-
-For these cases it should be possible to directly use local folders where the packages are already unpacked.
-
-Since these development folders are usually linked to revision control systems (like Git), another useful feature for the component framework would be to directly manage remote Git repositories.
-
-For obvious reasons, contrary to the other files in the local repository, these files are not set to read/only.
-
-TODO: define details >>>>>>>>>>>>>>>>
-
-## Repository content brief
-
-For each remote repository there is a summary content file enumerating the public packages with their full URLs and just enough information to build a brief outline of the package.
-
-These files, usually named *content.xml* are managed by the administration tool. The various configuration tools read in these files when they start-up to obtain information about the various packages that have been installed.
-
-For repositories of other types, like CMSIS Pack, which do not provide a *content.xml* file, the component framework provides a specific way of browsing the repository definition files and composing an equivalent *content.xml*, later cached locally.
-
-An example of such file is presented below:
-
-    <?xml version="1.0" encoding="UTF-8"?>
-
-    <root version="1.1">
-      <repository name="Keil">
-        <description>Keil CMSIS packs repository</description>
-        <properties>
-          <property name="type">cmsis.repo</property>
-          <property name="repo.url">http://www.keil.com/pack/index.idx</property>
-          <property name="generator">GNU ARM Eclipse Plug-ins</property>
-          <property name="date">20140620141046</property>
-        </properties>
-        <packages>
-          <package name="CMSIS">
-            <description>CMSIS (Cortex Microcontroller Software Interface Standard)</description>
-            <versions>
-              <version name="4.1.0">
-                <description>- CMSIS-Driver   2.02  (incompatible update)</description>
-                <properties>
-                  <property name="type">cmsis.pack</property>
-                  <property name="vendor.name">ARM</property>
-                  <property name="pack.name">CMSIS</property>
-                  <property name="version.name">4.1.0</property>
-                  <property name="archive.url">http://www.keil.com/pack/ARM.CMSIS.4.1.0.pack</property>
-                  <property name="archive.name">ARM.CMSIS.4.1.0.pack</property>
-                  <property name="archive.size">62260982</property>
-                  <property name="dest.folder">ARM/CMSIS/4.1.0</property>
-                  <property name="pdsc.name">ARM.CMSIS.pdsc</property>
-                  <property name="date">2014-06-12</property>
-                </properties>
-                <outline>
-                  <devicefamily name="ARM Cortex M0">
-                    <property name="vendor.name">ARM</property>
-                    <property name="vendor.id">82</property>
-                  </devicefamily>
-                  <devicefamily name="ARM Cortex M0 plus">
-                    <property name="vendor.name">ARM</property>
-                    <property name="vendor.id">82</property>
-                  </devicefamily>
-                  <devicefamily name="ARM Cortex M3">
-                    <property name="vendor.name">ARM</property>
-                    <property name="vendor.id">82</property>
-                  </devicefamily>
-                  <devicefamily name="ARM Cortex M4">
-                    <property name="vendor.name">ARM</property>
-                    <property name="vendor.id">82</property>
-                  </devicefamily>
-                  ...
-                  <board name="uVision Simulator">
-                    <description>uVision Simulator</description>
-                    <property name="vendor.name">Keil</property>
-                  </board>
-                  <component name="CMSIS / CORE">
-                    <description>CMSIS-CORE for Cortex-M, SC000, and SC300</description>
-                  </component>
-                  <component name="Device / Startup">
-                    <description>System and Startup for Generic ARM Cortex-M0 device</description>
-                  </component>
-                  <component name="Device / Startup / C Startup">
-                    <description>System and Startup for Generic ARM Cortex-M0 device</description>
-                  </component>
-                  ...
-                  <example name="DSP_Lib Class Marks example (uVision Simulator)">
-                    <description>DSP_Lib Class Marks example</description>
-                    <property name="example.name">DSP_Lib Class Marks example</property>
-                  </example>
-                  <example name="DSP_Lib Convolution example (uVision Simulator)">
-                    <description>DSP_Lib Convolution example</description>
-                    <property name="example.name">DSP_Lib Convolution example</property>
-                  </example>
-                  ...
-                </outline>
-                <external>
-                  <board name="uVision Simulator">
-                    <property name="vendor.name">Keil</property>
-                  </board>
-                </external>
-              </version>
-              <version name="4.0.0">
-                <description>- CMSIS-Driver   2.00  Preliminary (incompatible update) ...</description>
-                <properties>
-                  <property name="type">cmsis.pack</property>
-                  <property name="vendor.name">ARM</property>
-                  <property name="pack.name">CMSIS</property>
-                  <property name="version.name">4.0.0</property>
-                  <property name="archive.url">http://www.keil.com/pack/ARM.CMSIS.4.0.0.pack</property>
-                  <property name="archive.name">ARM.CMSIS.4.0.0.pack</property>
-                  <property name="archive.size">0</property>
-                  <property name="dest.folder">ARM/CMSIS/4.0.0</property>
-                  <property name="pdsc.name">ARM.CMSIS.pdsc</property>
-                </properties>
-              </version>
-              <version name="3.20.4">
-                <description>- CMSIS-RTOS 4.74 (see revision history for details) ...</description>
-                <properties>
-                  <property name="type">cmsis.pack</property>
-                  <property name="vendor.name">ARM</property>
-                  <property name="pack.name">CMSIS</property>
-                  <property name="version.name">3.20.4</property>
-                  <property name="archive.url">http://www.keil.com/pack/ARM.CMSIS.3.20.4.pack</property>
-                  <property name="archive.name">ARM.CMSIS.3.20.4.pack</property>
-                  <property name="archive.size">52095025</property>
-                  <property name="dest.folder">ARM/CMSIS/3.20.4</property>
-                  <property name="pdsc.name">ARM.CMSIS.pdsc</property>
-                </properties>
-              </version>
-              ...
-            </versions>
-          </package>
-        </packages>
-      </repository>
-    </root>
-
-## Package versioning
-
-Below each package directory there can be one or more version sub-directories, named after the versions. This is a requirement of the component framework: it must be possible for users to install multiple versions of a package and select which one to use for any given application. This has a number of advantages to users: most importantly it allows a single component repository to be shared between multiple users and multiple projects, as required; also it facilitates experiments, for example it is relatively easy to try out the latest version of some package and see if it makes any difference. There is a potential disadvantage in terms of disk space. However since XCDL packages generally consist of source code intended for small embedded systems, and given typical modern disk sizes, keeping a number of different versions of a package installed will usually be acceptable. The administration tool can be used to remove versions that are no longer required.
-
-    Packages/ilg
-    └── xyzw
-        ├── 3.20.3
-        ├── 3.20.4
-        ├── 4.1.0
-        └── current
-
-The version *current* is special. Typically it corresponds to the very latest version of the package when using Git like local repositories, i.e. versions that were not frozen in a release.
-
-All other subdirectories of a package correspond to specific releases of that package. The component framework allows users to select the particular version of a package they want to use, but by default the most recent one will be used. This requires some rules for ordering version numbers, a difficult task because of the wide variety of ways in which versions can be identified.
-
-## Package contents and layout
-
-A typical package contains the following:
-
-1.  Some number of source files (.c/.cpp) and header files (.h). The project artefact (library or executable) will be created using these files. Some source files may serve other purposes, for example to provide a linker script.
-2.  Exported header files which define the interface provided by the package.
-3.  On-line documentation, for example reference pages for each exported function.
-4.  Some number of test cases, shipped in source format, allowing users to check that the package is working as expected on their particular hardware and in their specific configuration.
-5.  One or more CDL scripts describing the package to the configuration system.
-
-It is also conventional to have a per-package *ChangeLog* file used to keep track of changes to that package. This is especially valuable to end users of the package who may not have convenient access to the source code control system used to manage the master copy of the package, and hence cannot find out easily what has changed. Often it can be very useful to the main developers as well.
-
-Any given packages need not contain all of these. It is compulsory to have at least one XCDL file describing the package, otherwise the component framework would be unable to process it. The name of this file is fixed and the component framework will search for it in two locations, in the following order:
-
-    ${package_root}/meta/xcdl.xml
-    ${package_root}/xcdl.xml
+Any given packages need not contain all of these.
 
 Some packages may not have any source code: it is possible to have a package that merely defines a common interface which can then be implemented by several other packages, especially in the context of device drivers; however it is still common to have some code in such packages to avoid replicating shareable code in all of the implementation packages. Similarly it is possible to have a package with no exported header files, just source code that implements an existing interface: for example an ethernet device driver might just implement a standard interface and not provide any additional functionality. Packages do not need to come with any on-line documentation, although this may affect how many people will want to use the package. Much the same applies to per-package test cases.
 
+### Package layout
+
 The component framework has a recommended per-package folder layout which splits the package contents on a functional basis:
 
-    Packages/ilg/Xyzw/current
+    Packages/ilg/xyzw/current
+    ├── .xpackage.xml
+    ├── .xpackignore
     ├── ChangeLog
+    ├── README.md
     ├── doc
     ├── include
-    ├── meta
-    │   └── xcdl.xml
     ├── src
     └── tests
 
-For example, if a package has an *include* sub-folder then the component framework will assume that all header files in and below that folder are **exported header files** and will do the right thing at build time. Similarly if there is *doc* property indicating the location of on-line documentation then the component framework will first look in the doc sub-folder.
+For example, if a package has an `include` sub-folder then the component framework will assume that all header files in and below that folder are **exported header files** and will do the right thing at build time. Similarly if there is *doc* property indicating the location of online documentation then the component framework will first look in the `doc` subfolder.
 
-This folder layout is just a guideline, it is not enforced by the component framework. For simple packages it often makes more sense to have all of the files in just one directory. For example a package could just contain the files hello.cpp, hello.h, hello.html and xcdl.xml. By default hello.h will be treated as an exported header file, although this can be overridden with the includeFiles property. Assuming there is a doc property referring to hello.html and there is no doc sub-directory then the tools will search for this file relative to the package’s top-level and everything will just work. Much the same applies to hello.cpp and xcdl.xml.
+Except for the name and location of the `.xpackage.xml` file, this folder layout is just a guideline, it is not enforced by the component framework. For simple packages it often makes more sense to have all of the files in just one directory. For example a package could just contain the files hello.cpp, hello.h, hello.html. By default hello.h will be treated as an exported header file, although this can be overridden with the includeFiles property. Assuming there is a doc property referring to hello.html and there is no doc sub-directory then the tools will search for this file relative to the package’s top-level and everything will just work. Much the same applies to hello.cpp.
+
+## The `.xpackage.xml` file
+
+### `name`
+
+A string that, together with the `parent`, must uniquely identify the project node in the local repository hierarchy. It does not need to match the GitHub repository name, althought usually it is closely related.
+
+The parent path must have at least one level, and generally defines the originator of the package (user or organization).
+
+The XML syntax:
+
+    <package name="parent/string">
+      ...
+    </package>
+
+The JSON Syntax (string):
+
+    "name": "string"
+
+### `description`
+
+A paragraph with a reasonably detailed description of the package.
+
+The XML syntax:
+
+    <description>long string</description>
+
+The JSON Syntax (string):
+
+    "description": "long string"
+
+Example:
+
+    <package name="/ilg/STM32/F4/HAL">
+      <description>The STM32F4 HAL library.</description>
+    </package>
+
+### `releases`
+
+The list, in reverse order, of all versions of the package publicly released.
+
+The XML syntax:
+
+    <releases>
+      <release name="semver">
+        <description>long string</description>
+        <date>iso-date</date>
+        <properties>
+          <property name="string">value</string>
+          ...
+        </properties>
+      </release>
+    </releases>
+
+The JSON syntax (array of objects):
+
+    "releases": [
+      {
+        "name": "semver",
+        "description": "long string",
+        "date": "iso-date",
+        "property1": "value1",
+        "property2": "value2",
+        ...
+      }
+    ]
+
+### `keywords`
+
+An array of strings, intended to help searches identify a package.
+
+The XML syntax:
+
+    <keywords>
+      <keyword>string1</keyword>
+      <keyword>string2</keyword>
+      ...
+    </keywords>
+
+The JSON syntax (array of strings):
+
+    "keywords": [
+      "string1",
+      "string2",
+      ...
+    ]
+
+### `homepage`
+
+The full URL to the project home page, either a separate web or a GitHub/SourceForge/etc project page.
+
+The XML syntax:
+
+    <homepage>url</homepage>
+
+The JSON syntax (string):
+
+    "homepage": "url"
+
+### `bugs`
+
+The full URL to the project's issue tracker and / or the email address to which issues should be reported. These are helpful for people who encounter issues with your package.
+
+The XML syntax:
+
+    <bugs>
+      <url>string</url>
+      <email>string</email>
+    </bugs>
+
+The JSON syntax (object):
+
+    "bugs": {
+      "url": "string",
+      "email": "string"
+    }
+
+Example:
+
+    <bugs>
+      <url>https://github.com/gnuarmeclipse/plug-ins/issues/1</url>
+    </bugs>
+
+
+### `license`
+
+A string identifying the license for the package, so that people know how they are permitted to use it.
+
+The XML syntax:
+
+    <license>string</license>
+
+The JSON syntax (string):
+
+    "license": "string"
+
+The license is identified by a short ID, selected from the list of [SPDX license IDs](https://spdx.org/licenses/), ideally one that is [OSI](http://opensource.org/licenses/alphabetical) approved.
+
+If the package is licensed under multiple common licenses, use an [SPDX license expression syntax version 2.0](http://npmjs.com/package/spdx) string, like this:
+
+    <license>(ISC OR GPL-3.0)</license>
+
+If the license hasn't been assigned an SPDX identifier, or if it is a custom license, use the following valid SPDX expression:
+
+    <license>SEE LICENSE IN filename</license>
+
+Then include a file named `filename` at the top level of the package.
+
+Finally, if you do not wish to grant others the right to use a private or unpublished package under any terms, use:
+
+    <license>UNLICENSED</license>
+
+### `maintainers`
+
+The maintainers are the persons who maintain the package (may be different from the persons who created the source files packaged in the package). The first maintainer is the person who created the package. The array extends at the end.
+
+The XML syntax:
+
+    <maintainers>
+      <maintainer name="string">
+        <email>string</string>
+        <url>string</url>
+      </maintainer>
+    </maintainers>
+
+The JSON syntax (array of objects):
+
+    "maintainers": [
+      {
+        "name": "string",
+        "email": "string",
+        "url": "string"
+      }
+    ]
+
+### `contributors`
+
+The contributors are the persons who contributed to the content of the package. The first contributor is the person who created the source files available in the package. The array extends at the end.
+
+The XML syntax:
+
+    <contributors>
+      <contributor name="string">
+        <email>string</string>
+        <url>string</url>
+      </contributor>
+      ...
+    </contributors>
+
+The JSON syntax (array of objects):
+
+    "contributors": [
+      {
+        "name": "string",
+        "email": "string",
+        "url": "string"
+      }
+    ]
+
+### `repository`
+
+The place where the pacakge repository is located. This is helpful for people who want to contribute.
+
+The XML syntax:
+
+    <repository>
+      <type>string</type>
+      <url>string</url>
+    </repository>
+
+The JSON syntax (array of objects):
+
+    "repository": {
+      "type": "string",
+      "url": "string"
+    }
+
+Support for the `git` type string is mandatory. Other types, like `svn`, might be added.
+
+Example:
+
+    <repository>
+      <type>git</type>
+      <url>https://github.com/xpacks/arm-cmsis-core.git</url>
+    </repository>
+
+### `dependencies`
+
+Dependencies are specified in a simple object that maps a package name to a version range. The version range is a string which has one or more space-separated descriptors. Dependencies can also be identified with a tarball or git URL.
+
+The XML syntax:
+
+    <dependencies>
+      <package name="string">
+        <version>string</version>
+      </package>
+    </dependencies>
+
+The JSON syntax (object):
+
+    "dependencies": {
+      "string": "string",
+      ...
+    }
+
+The syntax for the version string is based on [semver](http://semver.org/), with the following expressions (inspired from NPM):
+
+* `version` Must match version exactly
+* `>version` Must be greater than version
+* `>=version` etc
+* `<version`
+* `<=version`
+* `~version` "Approximately equivalent to version" See semver(7)
+* `^version` "Compatible with version" See semver(7)
+* `1.2.x` 1.2.0, 1.2.1, etc., but not 1.3.0
+* `*` Matches any version
+* `""` (just an empty string) Same as *
+* `version1 - version2` Same as >=version1 <=version2
+* `range1 || range2` Passes if either range1 or range2 are satisfied.
+
+Future versions may also support:
+
+* http://.../file.tgz
+* git://...
+* github://user/repo
+* tag
+* path/path/path (???)
+
+Example:
+
+    <package name="/ilg/stm32/f4/cmsis">
+      ...
+      <dependencies>
+        <package name="arm/cmsis">
+          <version>&gt;=4.4.0</version>
+        </package>
+      </dependencies>
+      ...
+    </package>
+
+***
+
+(This part is not updated yet)
+
+## Build
 
 ### Build artefact types
 
@@ -349,7 +449,7 @@ The second type of definitions that the component framework should support are *
 
 -   are processed by the compiler, not the preprocessor; this has the advantage of allowing type checks
 -   can be grouped in name spaces; this minimise the risk of name clashes
-    
+
         namespace one
         {
           constexpr int variable = 1234;
@@ -458,4 +558,4 @@ TODO: define the procedure to pack the content of a package folder to an archive
 
 ## Credits
 
-The initial content of this page was based on *Chapter 2. Package Organizaion* of *The eCos Component Writer’s Guide*, by Bart Veer and John Dallaway, published in 2001.
+The initial content of this page was based on *Chapter 2. Package Organization* of *The eCos Component Writer’s Guide*, by Bart Veer and John Dallaway, published in 2001.
