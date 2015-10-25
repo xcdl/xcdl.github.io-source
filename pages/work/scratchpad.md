@@ -7,6 +7,13 @@ author: Liviu Ionescu
 
 These are notes on various decisions that need to be made, with the available choices, with pros and cons.
 
+## .json vs .xml
+
+JSON has two main disadvantages when used for configuration:
+
+- does not allow comments
+- usual parsers do not generate a DOM that, when serialized, creates the original file, so if updated by a tool, the formatting is not preserved.
+
 ## make vs. Python
 
 Two candidates for the build systems are considered:
