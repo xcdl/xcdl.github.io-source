@@ -1,6 +1,6 @@
 ---
 layout: page
-permalink: /guide/concepts-and-rationals/
+permalink: /guide/concepts/
 title: XCDL concepts and rationals
 author: Liviu Ionescu
 ---
@@ -84,13 +84,13 @@ A typical package contains the following:
 *  exported header files which define the interface provided by the package
 *  on-line documentation, for example reference pages for each exported function
 *  some number of test cases, shipped in source format, allowing users to check that the package is working as expected on their particular hardware and in their specific configuration
-*  one or more XCDL files describing the package to the configuration tools.
+*  one or more XCDL metadata files describing the package to the configuration tools.
 
-Not all packages need to contain all of these. For example some packages such as device drivers may not provide a new interface, instead they just provide another implementation of an existing interface. However all packages must contain at least one XCDL file that describes the package to the configuration tools.
+Not all packages need to contain all of these. For example some packages such as device drivers may not provide a new interface, instead they just provide another implementation of an existing interface. However **all packages must contain at least one XCDL metadata file** that describes the package to the configuration tools.
 
 It is possible to create a binary distribution file for a package containing all of the source code, header files, documentation, and other relevant files.
 
-More details in the Packages section below.
+More details in the Packages section below and in the separate [XCDL Packages]({{ site.baseurl }}/guide/packages/) section.
 
 ### Component framework
 
@@ -130,11 +130,86 @@ Usually component writers install packages by cloning one or more Git repositori
 
 The configuration tools require information about the various options provided by each package, their consequences and constraints, and other properties such as the location of online documentation. This information has to be provided in the form of **XCDL** metadata files. XCDL is short for **eXtensible Component Definition Language**, and is specifically designed as a way of describing configuration options.
 
+### XCDL objects & hierarchy
+
 The XCDL definition language includes several objects used to define all the configuration details.
 
 The XCDL objects are organised hierarchically, from option object up to the repository object.
 
-Each XCDL object has a number of specific properties, to define the source files, various configuration details, build settings, dependencies, etc.
+Each XCDL object has an unordered map of properties (similar to JSON definitions), to define the source files, various configuration details, build settings, dependencies, etc.
+
+#### Hierarchy
+
+Except the root node, all XCDL objects have a single parent; in other words the nodes can be represented as a tree.
+
+Except leaf nodes, all XCDL objects also have an ordered array of children.
+
+#### Node name
+
+Each node has a property called `name`. Names are short strings, and must follow the following rules:
+
+* be unique for a given parent
+* be accepted as POSIX file/folder name; this means letters, figures, and very few special characters, like `[-_.]`; for multi-word names, `-` (dash) is the preferred separator; `.` is used in version names.
+
+For XML configuration files, the node names are defined with the `name="xyz"` XML attribute (actually the only XML attribute to be used).
+
+    <component name="RCC">
+      ...
+    </component>
+
+When represented in a GUI, the node name is the string permanently displayed to identify the node.
+
+#### Node type
+
+Each node must have a property called `type`, which is a represented by a string.
+
+The node type defines the acceptable properties and children.
+
+When represented in a GUI, the node type defines the icon associated with the node.
+
+#### Node description
+
+Each node must have a property called `description`. Descriptions are reasonable long strings.
+
+    <component name="RCC">
+      <description>Real-Time Clock Control</description>
+      ...
+    </component>
+
+When represented in a GUI, the node description is generally shwown as tooltip, when the mouse hovers over the node, or in additional views showing all node details.
+
+#### Node children
+
+If a node has children, they are grouped as an array of nodes.
+
+    <component name="HAL">
+      ...
+      <children>
+        <component name="RCC">
+          ...
+        </component>
+      </children>
+    </component>
+
+#### XCDL paths
+
+Similar to files in a filesystem, XCDL nodes can be addressed as a sequence of slash separated node names:
+
+    /ilg/STM32/F4/HAL/RCC
+
+Addressing nodes can be done with:
+
+* complete paths, if they start with `/`; they are similar to absolute file system paths;
+* incomplete paths, if they do not start with `/`
+
+Incomplete paths are searched:
+
+* in the current node children
+* in the current node siblings
+* in the current node parents
+* ? (to be further defined)
+
+
 
 ### Options
 
@@ -186,7 +261,7 @@ Active components can be *enabled/disabled* by users, usually via a graphical to
 
 A package is a special type of component. Specifically, a package is the unit of distribution of components.
 
-If the package is distributed as a binary file, it can be installed (added to the components repository) using the appropriate tool. Afterwards it is possible to uninstall that package, or to install a later version.
+If the package is distributed as a binary file, it can be unpacked and installed (added to the components repository) using the appropriate tool. Afterwards it is possible to uninstall that package, or to install a later version.
 
 #### Loaded/unloaded
 
@@ -196,7 +271,7 @@ Selecting which packages are loaded is the first step of the configuration wizar
 
 #### Versioning
 
-In addition, it is also possible to select the particular version of a package that should be loaded. Multiple versions of a package must be available to the component framework at the same time.
+For repeatability reasons it is required for some packages to depend on a specific version of a package. For this to work it must be possible to select the particular version of a package that should be loaded. Since multiple different packages may depend each on a different versions of a package, multiple versions of the same package must be available to the component framework at the same time.
 
 #### Hierarchy
 
