@@ -1,13 +1,14 @@
 #### [XCDL Home]({{ site.baseurl }}/)
 
 #### Component Writer's Guide
-* [XCDL Concepts and Rationals]({{ site.baseurl }}/guide/concepts-and-rationals/)
+* [XCDL Concepts]({{ site.baseurl }}/guide/concepts/)
 * [XCDL Packages]({{ site.baseurl }}/guide/packages/)
-* [The XCDL Language]({{ site.baseurl }}/guide/language/)
+* [XCDL Repositories]({{ site.baseurl }}/guide/repositories/)
+* [XCDL Language]({{ site.baseurl }}/guide/language/)
 * [The build process]({{ site.baseurl }}/guide/build-process/)
 
 #### Reference
-* [The XCDL definitions reference]({{ site.baseurl }}/guide/definitions-reference/)
+* [XCDL language]({{ site.baseurl }}/reference/language/)
 
 #### License
 

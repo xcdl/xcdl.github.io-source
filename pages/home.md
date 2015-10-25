@@ -25,7 +25,7 @@ Although targeted to Eclipse, these specifications should not prevent other deve
 
 ## Component Writer's Guide
 
-* [XCDL concepts and rationals]({{ site.baseurl }}/guide/concepts-and-rationals/)
+* [XCDL concepts and rationals]({{ site.baseurl }}/guide/concepts/)
 * [XCDL packages]({{ site.baseurl }}/guide/packages/)
 * [The XCDL language]({{ site.baseurl }}/guide/language/)
 * [The build process]({{ site.baseurl }}/guide/build-process/) (not yet updated for XCDL)
@@ -75,6 +75,7 @@ The XCDL software is released under the [GPL License](https://www.gnu.org/licens
 * [Gentoo Development Guide](https://devmanual.gentoo.org/index.html)
 * [MacPorts Guide](https://guide.macports.org/)
 * [Arch PKGBUILD](https://wiki.archlinux.org/index.php/PKGBUILD)
+* [NPM](https://www.npmjs.com) - the package manager for JS (special interest for the packet.json format)
 
 ## Build tools
 
