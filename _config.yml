@@ -91,6 +91,7 @@ google-analytics-id: UA-16767008-13
 # jekyll-toc-generator
 tocTopTag: h2
 minItemsToShowToc: 3
+useExistingAnchors: true
 
 css-date: 201510121951
 
