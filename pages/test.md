@@ -20,17 +20,40 @@ Text _italic_ text.
 
 Text `code` text.
 
+A list:
+
 * one
+
+    indented continuation
+
+        Indented Code line
 * two
+
+Another list:
+
+1. one
+
+    indented continuation
+
+        Indented Code line
+
+1. two
 
 > note
 
 ***
 
-More text
+More text.
 
 ```
 Code line 1
 Code line 2
 ```
-More text
+More text.
+
+    Code line 3
+    Code line 4
+
+## Header 2
+
+Again.
