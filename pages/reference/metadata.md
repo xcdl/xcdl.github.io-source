@@ -1,7 +1,7 @@
 ---
 layout: page
-permalink: /reference/language/
-title: The XCDL language reference
+permalink: /reference/metadata/
+title: The XCDL metadata reference
 author: Liviu Ionescu
 
 tocLevels: 1
@@ -707,7 +707,7 @@ Valid uses of computed objects include the following:
 
 -   On some target hardware a particular feature may be user-configurable, while on other targets it is fixed. For example some processors can operate in either big-endian or little-endian mode, while other processors do not provide any choice. It is possible to have an option OS_BOOL_BIGENDIAN which is calculated in some architectural HAL packages but user-modifiable in others.
 
--   Computed objects can provide an alternative way for one package to affect the behavior of another one. Suppose a package may provide two possible implementations, a preferred one involving self-modifying code and a slower alternative. If the system involves a ROM bootstrap then the slower alternative must be used, but it would be inappropriate to modify the startup option in every HAL to impose constraints on this package. Instead it is possible to have a calculated option whose value is `{ OS_HAL_STARTUP == "ROM" }`, and which has appropriate consequences. Arguably this is a spurious example, and it should be a user choice whether or not to use self-modifying code with a defaultValue based on OS_HAL_STARTUP, but that is for the component writer to decide.
+-   Computed objects can provide an alternative way for one package to affect the behaviour of another one. Suppose a package may provide two possible implementations, a preferred one involving self-modifying code and a slower alternative. If the system involves a ROM bootstrap then the slower alternative must be used, but it would be inappropriate to modify the startup option in every HAL to impose constraints on this package. Instead it is possible to have a calculated option whose value is `{ OS_HAL_STARTUP == "ROM" }`, and which has appropriate consequences. Arguably this is a spurious example, and it should be a user choice whether or not to use self-modifying code with a defaultValue based on OS_HAL_STARTUP, but that is for the component writer to decide.
 
 -   Sometimes it should be possible to perform a particular test at compile-time, for example by using a C/C++ preprocessor `#if` construct. However the preprocessor has only limited functionality, for example it cannot perform string comparisons. XCDL expressions are more powerful.
 

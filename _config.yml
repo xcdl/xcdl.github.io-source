@@ -1,9 +1,9 @@
 # Site settings.
 
 # Without a clear rule enforced, both title and name are used.
-title: XCDL
-name: XCDL
-description: The eXtensible Component Definition Language.
+title: XCDL / xPack
+name: XCDL / xPack
+description: The eXtensible Component Definition Language component framework
 
 email: il@livius.net
 

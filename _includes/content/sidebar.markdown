@@ -1,14 +1,14 @@
-#### [XCDL Home]({{ site.baseurl }}/)
+#### [Home]({{ site.baseurl }}/)
 
 #### Component Writer's Guide
-* [XCDL Concepts]({{ site.baseurl }}/guide/concepts/)
-* [XCDL Packages]({{ site.baseurl }}/guide/packages/)
-* [XCDL Repositories]({{ site.baseurl }}/guide/repositories/)
-* [XCDL Language]({{ site.baseurl }}/guide/language/)
+* [Concepts and rationals]({{ site.baseurl }}/guide/concepts/)
+* [Packages]({{ site.baseurl }}/guide/packages/)
+* [Repositories]({{ site.baseurl }}/guide/repositories/)
+* [Metadata]({{ site.baseurl }}/guide/metadata/)
 * [The build process]({{ site.baseurl }}/guide/build-process/)
 
 #### Reference
-* [XCDL language]({{ site.baseurl }}/reference/language/)
+* [Metadata]({{ site.baseurl }}/reference/metadata/)
 
 #### License
 

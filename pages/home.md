@@ -1,13 +1,17 @@
 ---
 layout: main
-title:  Welcome to XCDL!
+title:  "The XCDL component framework"
 permalink: /
 author: Liviu Ionescu
 ---
 
 ## Introduction
 
-The [XCDL project](https://github.com/xcdl) defines an **eXtensible Component Definition Language** (CDL) and implements tools to configure and build complex, package based, multi-variant (multi-architecture, multi-board, multi-toolchain) embedded projects. It is inspired by eCos CDL and also plans to incorporate some ARM CMSIS Pack concepts. The primary projects to benefit from XCDL are [µOS++ IIIe](http://micro-os-plus.livius.net/) (as content for the components), [xPacks](https://github.com/xpacks) (as repository for packs) and [GNU ARM Eclipse](http://gnuarmeclipse.github.io/)  (as graphical tools to manage the components).
+The [XCDL project](https://github.com/xcdl) defines and implements a component framework, as a set of metadata and a collection of tools specifically designed to configure and build complex, package based, multi-variant (multi-architecture, multi-board, multi-toolchain) embedded projects. It is inspired by eCos CDL and also incorporates some ARM CMSIS Pack concepts. The primary projects to benefit from XCDL are:
+
+- [xPacks](https://github.com/xpacks) (as repository for packages/components)
+- [µOS++ IIIe](http://micro-os-plus.livius.net/) (as content for the components)
+- [GNU ARM Eclipse](http://gnuarmeclipse.github.io/)  (as graphical tools to manage the components).
 
 This project is hosted on [GitHub](https://github.com/xcdl).
 
@@ -25,16 +29,17 @@ Although targeted to Eclipse, these specifications should not prevent other deve
 
 ## Component Writer's Guide
 
-* [XCDL concepts and rationals]({{ site.baseurl }}/guide/concepts/)
-* [XCDL packages]({{ site.baseurl }}/guide/packages/)
-* [The XCDL language]({{ site.baseurl }}/guide/language/)
+* [Concepts and rationals]({{ site.baseurl }}/guide/concepts/)
+* [Packages]({{ site.baseurl }}/guide/packages/)
+* [Repositories]({{ site.baseurl }}/guide/repositories/)
+* [Metadata]({{ site.baseurl }}/guide/metadata/)
 * [The build process]({{ site.baseurl }}/guide/build-process/) (not yet updated for XCDL)
 * The XCDL graphical tools
 
 ## Reference
 
-* [The XCDL definitions reference]({{ site.baseurl }}/guide/definitions-reference/)
-* The XCDL command line tools reference
+* [Metadata]({{ site.baseurl }}/reference/metadata/)
+* [command line tools]({{ site.baseurl }}/reference/commands/) (work in progress)
 
 ## SRS
 
@@ -84,6 +89,7 @@ For an exhaustive list, see [Wikipedia](https://en.wikipedia.org/wiki/List_of_bu
 * [Apache Maven](https://maven.apache.org/) (written in Java, XML configuration files)
 * [SCons](http://scons.org/) (configuration files are Python scripts)
 * [RAKE - Ruby Make](https://github.com/ruby/rake) (tasks and dependencies in Ruby)
+* [builds](http://buildr.apache.org) - Apache Buildr is a build system for Java-based applications
 * [Gradle](https://gradle.org/) (written in Groovy)
 * [CMake](http://www.cmake.org/) (written in C++; uses native builders like make)
 * [Waf](https://github.com/waf-project/waf) (a build tool written in Python)
@@ -95,3 +101,11 @@ For an exhaustive list see [Wikipedia](https://en.wikipedia.org/wiki/Comparison_
 
 * [Hudson](http://hudson-ci.org/) (the original Sun project, donated by Oracle to the Eclipse Foundation)
 * [Jenkins](http://jenkins-ci.org/) (the more active fork, backed by the project creator)
+
+## JavaScript resources
+
+* [Book: JavaScript: The Definitive Guide (6th Edition) by David Flanagan](http://www.amazon.com/JavaScript-Definitive-Guide-Activate-Guides/dp/0596805527/)
+* [Book: JavaScript: The Good Parts by Douglas Crockford](http://www.amazon.com/JavaScript-Good-Parts-Douglas-Crockford/dp/0596517742/)
+* [Crockford JavaScript](http://www.crockford.com/javascript/)
+  * [Private Members in JavaScript](http://www.crockford.com/javascript/private.html)
+  * [Classical Inheritance in JavaScript](http://javascript.crockford.com/inheritance.html)

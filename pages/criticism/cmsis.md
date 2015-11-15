@@ -15,7 +15,7 @@ It provides silicon vendors with a great method to describe their chips in a str
 
 The advantage of being a great tool for silicon vendors is probably its worse disadvantage, since (at least the current version, v1.3) CMSIS Pack seems intended mainly to silicon vendors, and not to general software distribution (like eCos CDL).
 
-The second major disadvantage (partly understandable by its origins) is the deep bias towards µVision, a proprietary tool by Keil, which limits (and sometime even voids) its usefulness in open environments, like GCC and Eclipse.
+The second major disadvantage (partly understandable by its origins) is the deep bias towards µVision, a proprietary tool by Keil, which limits (and sometimes even voids) its usefulness in open environments, like GCC and Eclipse.
 
 ### Excessively complicated design
 

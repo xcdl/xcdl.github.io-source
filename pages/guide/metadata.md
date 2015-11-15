@@ -1,7 +1,7 @@
 ---
 layout: page
-permalink: /guide/language/
-title: The XCDL language
+permalink: /guide/metadata/
+title: The XCDL metadata
 author: Liviu Ionescu
 ---
 
@@ -185,7 +185,7 @@ The `<parent>` property can be used to move a XCDL entity somewhere else in the 
       ...
     </package>
 
-The `<parent>` property can also be used in the body of a `<component>`, `<option>` or `<interface>`, but this is less common. However care has to be taken since excessive reparenting can be confusing. Care also has to be taken when reparenting below some other package that may not actually be loaded in a given configuration, since the resulting behavior is undefined.
+The `<parent>` property can also be used in the body of a `<component>`, `<option>` or `<interface>`, but this is less common. However care has to be taken since excessive reparenting can be confusing. Care also has to be taken when reparenting below some other package that may not actually be loaded in a given configuration, since the resulting behaviour is undefined.
 
 The `<includeFile>` property can only be used in the body of a `<component>` object. The property takes a single filename as argument, and this should be another XCDL file containing additional options, subcomponents and interfaces that should go below the current component in the hierarchy. If the directory layout conventions are observed then the component framework will look for the specified file relative to the meta subdirectory of the package, otherwise the filename will be treated as relative to the package’s top-level directory.
 
@@ -429,7 +429,7 @@ Any options which are not in the current configuration are handled as follows:
 
 1.  Any references to that option will evaluate to 0/false, so `valueOf('...') == 0/false`, `isLoaded('...') == false`, `isActive('...') == false`, `isEnabled('...') == false`.
 2.  An option that is not loaded has no consequences on the build process. It cannot directly result in any `#define`’s in a configuration header file, nor in any files being compiled. This is only reasonable: if the option is not loaded then the component framework has no way of knowing about any compile or similar properties. An option that is not loaded can have indirect consequences by being referenced in XCDL expressions.
-3.  An option that is not loaded cannot impose any constraints on the rest of the configuration. Again this is the only reasonable behavior: if the option is not loaded then any associated requires or `<legalValues>` properties will not be known.
+3.  An option that is not loaded cannot impose any constraints on the rest of the configuration. Again this is the only reasonable behaviour: if the option is not loaded then any associated requires or `<legalValues>` properties will not be known.
 
 ### Is the option **active**?
 
@@ -447,7 +447,7 @@ The active or inactive state of an option may affect other packages. For example
 
 ### Is the option **enabled**? What is the option value?
 
-The majority of configuration options are boolean in nature, so the user can either enable or disable some functionality. Some options are different. For example `valueOf('libc/stdio/bufsize')` is a number, and `valueOf('libc/stdio/default console')` is a string corresponding to a device name. XCDL has to cope with this variety, and define the exact behavior of the system in terms of constraints and build-time consequences.
+The majority of configuration options are boolean in nature, so the user can either enable or disable some functionality. Some options are different. For example `valueOf('libc/stdio/bufsize')` is a number, and `valueOf('libc/stdio/default console')` is a string corresponding to a device name. XCDL has to cope with this variety, and define the exact behaviour of the system in terms of constraints and build-time consequences.
 
 In XCDL the value of an option consists of two parts. There is a boolean part, controlling whether or not the option is enabled, that can be accessed with `isEnabled('...')`. There is also a data part, providing additional information and accessed with `valueOf('...')`. For most options one of these parts is fixed, as controlled by the option’s `<valueType>` property:
 

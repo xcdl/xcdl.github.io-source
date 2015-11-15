@@ -11,20 +11,20 @@ For a package to be usable in the XCDL component framework it must conform to ce
 
 ### What is a package?
 
-Inspired from the [NPM](https://docs.npmjs.com/misc/developers#what-is-a-package) package definition, an XCDL package is:
+An XCDL package is:
 
-1. a folder containing a valid `.xpackage.xml` file;
+1. a folder containing a valid `.xpack` file;
 2. a gzipped tarball containing 1);
 3. a URL that resolves to 2);
 4. a Git URL that, when cloned, results in 1).
 
-The definition is intentionally Git and JavaScript centric, as these technologies are considered mature and worth considering.
+The definition is inspired from the [NPM](https://docs.npmjs.com/misc/developers#what-is-a-package) package definition, and is intentionally Git and JavaScript centric, as these technologies are considered mature and worth considering.
 
-Although the XCDL language will probably remain based on XML, equivalent definitions can be expressed in JSON, and compatibility with JSON is considered a kind of validation that the definitions are simple and consistent.
+Although the XCDL language will probably remain based on XML, equivalent definitions can be expressed in JSON, and maintaining compatibility with JSON is considered a kind of validation that the definitions are simple and consistent.
 
 ### Package contents
 
-In addition to the `.xpackage.xml` metadata file, a typical package contains the following:
+In addition to the `.xpack` metadata file, a typical package contains the following:
 
 *  some number of source files (.c/.cpp) and header files (.h). The project artefact (library or executable) will be created using these files. Some source files may serve other purposes, for example to provide a linker script;
 *  exported header files which define the interface provided by the package;
@@ -43,8 +43,8 @@ Some packages may not have any source code: it is possible to have a package tha
 The component framework has a recommended per-package folder layout which splits the package contents on a functional basis:
 
     Packages/ilg/xyzw/current
-    ├── .xpackage.xml
-    ├── .xpackignore
+    ├── .xpack
+    ├── .xcdl
     ├── ChangeLog
     ├── README.md
     ├── doc
@@ -54,9 +54,19 @@ The component framework has a recommended per-package folder layout which splits
 
 For example, if a package has an `include` sub-folder then the component framework will assume that all header files in and below that folder are **exported header files** and will do the right thing at build time. Similarly if there is *doc* property indicating the location of online documentation then the component framework will first look in the `doc` subfolder.
 
-Except for the name and location of the `.xpackage.xml` file, this folder layout is just a guideline, it is not enforced by the component framework. For simple packages it often makes more sense to have all of the files in just one directory. For example a package could just contain the files hello.cpp, hello.h, hello.html. By default hello.h will be treated as an exported header file, although this can be overridden with the includeFiles property. Assuming there is a doc property referring to hello.html and there is no doc sub-directory then the tools will search for this file relative to the package’s top-level and everything will just work. Much the same applies to hello.cpp.
+Except for the name and location of the `.xpack` file, this folder layout is just a guideline, it is not enforced by the component framework. For simple packages it often makes more sense to have all of the files in just one directory. For example a package could just contain the files hello.cpp, hello.h, hello.html. By default hello.h will be treated as an exported header file, although this can be overridden with the includeFiles property. Assuming there is a doc property referring to hello.html and there is no doc sub-directory then the tools will search for this file relative to the package’s top-level and everything will just work. Much the same applies to hello.cpp.
 
-## The `.xpackage.xml` file
+## The `.xpack` file
+
+### root element
+
+The root element for `.xpack` files is `package`:
+
+    <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+
+    <package>
+      ..
+    </package>
 
 ### `name`
 
@@ -66,13 +76,15 @@ The parent path must have at least one level, and generally defines the originat
 
 The XML syntax:
 
-    <package name="parent/string">
-      ...
-    </package>
+    <name>"parent/string"</name>
 
 The JSON Syntax (string):
 
     "name": "string"
+
+Example:
+
+    <name>/ilg/STM32/F4/HAL</name>
 
 ### `description`
 
@@ -88,9 +100,34 @@ The JSON Syntax (string):
 
 Example:
 
-    <package name="/ilg/STM32/F4/HAL">
-      <description>The STM32F4 HAL library.</description>
-    </package>
+    <description>The STM32F4 HAL library.</description>
+
+### `repository`
+
+The place where the package repository is located. This is helpful for people who want to contribute.
+
+The XML syntax:
+
+    <repository>
+      <type>string</type>
+      <url>string</url>
+    </repository>
+
+The JSON syntax (array of objects):
+
+    "repository": {
+      "type": "string",
+      "url": "string"
+    }
+
+Support for the `git` type is mandatory. Other types, like `svn`, might be added later.
+
+Example:
+
+    <repository>
+      <type>git</type>
+      <url>https://github.com/xpacks/arm-cmsis-core.git</url>
+    </repository>
 
 ### `releases`
 
@@ -121,6 +158,11 @@ The JSON syntax (array of objects):
         ...
       }
     ]
+
+TODO:
+
+* archiveUrl
+* repository tag
 
 ### `keywords`
 
@@ -254,33 +296,6 @@ The JSON syntax (array of objects):
       }
     ]
 
-### `repository`
-
-The place where the pacakge repository is located. This is helpful for people who want to contribute.
-
-The XML syntax:
-
-    <repository>
-      <type>string</type>
-      <url>string</url>
-    </repository>
-
-The JSON syntax (array of objects):
-
-    "repository": {
-      "type": "string",
-      "url": "string"
-    }
-
-Support for the `git` type string is mandatory. Other types, like `svn`, might be added.
-
-Example:
-
-    <repository>
-      <type>git</type>
-      <url>https://github.com/xpacks/arm-cmsis-core.git</url>
-    </repository>
-
 ### `dependencies`
 
 Dependencies are specified in a simple object that maps a package name to a version range. The version range is a string which has one or more space-separated descriptors. Dependencies can also be identified with a tarball or git URL.
@@ -325,15 +340,40 @@ Future versions may also support:
 
 Example:
 
-    <package name="/ilg/stm32/f4/cmsis">
+    <package>
+      <name>/ilg/stm32/f4/cmsis</name>
       ...
       <dependencies>
-        <package name="arm/cmsis">
-          <version>&gt;=4.4.0</version>
-        </package>
+      <package name="arm/cmsis">
+        <version>&gt;=4.4.0</version>
+      </package>
       </dependencies>
       ...
     </package>
+
+### `ignored`
+
+The `ignored` is used to keep stuff out of the binary package. It uses the same syntax as `.gitignore` to exclude files when creating the binary archive.
+
+The XML syntax:
+
+    <ignored>
+      <path>string</path>
+      ...
+    </ignored>
+
+The JSON syntax (array of strings):
+
+    "ignored": [
+      "string",
+      ...
+    ]
+
+Example:
+
+    <ignored>
+      <path>/.settings/</path>
+    </ignored>
 
 ***
 
@@ -385,7 +425,7 @@ When invoked from a command line, the build process involves the following steps
 
 ### Configurable source code
 
-All packages should be totally portable to all target hardware (with the obvious exceptions of HAL and device driver packages). They should also be totally bug-free, require the absolute minimum amount of code and data space, be so efficient that cpu time usage is negligible, and provide lots of configuration options so that application developers have full control over the behavior. The configuration options are optional only if a package can meet the requirements of every potential application without any overheads. It is not the purpose of this guide to explain how to achieve all of these requirements.
+All packages should be totally portable to all target hardware (with the obvious exceptions of HAL and device driver packages). They should also be totally bug-free, require the absolute minimum amount of code and data space, be so efficient that cpu time usage is negligible, and provide lots of configuration options so that application developers have full control over the behaviour. The configuration options are optional only if a package can meet the requirements of every potential application without any overheads. It is not the purpose of this guide to explain how to achieve all of these requirements.
 
 The XCDL component framework does have some important implications for the source code: compiler flag dependencies; package interfaces vs. implementations; and how configuration options affect source code.
 
@@ -403,7 +443,7 @@ Very occasionally the inability of one package to see implementation details of 
 
 #### Source code and configuration options
 
-Configurability usually involves source code that needs to implement different behavior depending on the settings of configuration options. It is possible to write packages where the only consequence associated with various configuration options is to control what gets built, but this approach is limited and does not allow for fine-grained configurability. There are three main ways in which options could affect source code at build time:
+Configurability usually involves source code that needs to implement different behaviour depending on the settings of configuration options. It is possible to write packages where the only consequence associated with various configuration options is to control what gets built, but this approach is limited and does not allow for fine-grained configurability. There are three main ways in which options could affect source code at build time:
 
 1.  The component code can be passed through a suitable preprocessor, either an existing one such as m4 or a new one specially designed with configurability in mind. The original sources would reside in the component repository and the processed sources would reside in the build tree. These processed sources can then be compiled in the usual way.
 
