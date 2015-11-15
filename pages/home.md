@@ -29,7 +29,8 @@ Although targeted to Eclipse, these specifications should not prevent other deve
 
 ## Component Writer's Guide
 
-* [Concepts and rationals]({{ site.baseurl }}/guide/concepts/)
+* [Rationals]({{ site.baseurl }}/guide/rationals/)
+* [Concepts]({{ site.baseurl }}/guide/concepts/)
 * [Packages]({{ site.baseurl }}/guide/packages/)
 * [Repositories]({{ site.baseurl }}/guide/repositories/)
 * [Metadata]({{ site.baseurl }}/guide/metadata/)
