@@ -89,7 +89,7 @@ For an exhaustive list, see [Wikipedia](https://en.wikipedia.org/wiki/List_of_bu
 * [Apache Maven](https://maven.apache.org/) (written in Java, XML configuration files)
 * [SCons](http://scons.org/) (configuration files are Python scripts)
 * [RAKE - Ruby Make](https://github.com/ruby/rake) (tasks and dependencies in Ruby)
-* [builds](http://buildr.apache.org) - Apache Buildr is a build system for Java-based applications
+* [buildr](http://buildr.apache.org) - Apache Buildr is a build system for Java-based applications
 * [Gradle](https://gradle.org/) (written in Groovy)
 * [CMake](http://www.cmake.org/) (written in C++; uses native builders like make)
 * [Waf](https://github.com/waf-project/waf) (a build tool written in Python)
@@ -101,6 +101,7 @@ For an exhaustive list see [Wikipedia](https://en.wikipedia.org/wiki/Comparison_
 
 * [Hudson](http://hudson-ci.org/) (the original Sun project, donated by Oracle to the Eclipse Foundation)
 * [Jenkins](http://jenkins-ci.org/) (the more active fork, backed by the project creator)
+* [Travis](https://travis-ci.org)
 
 ## JavaScript resources
 
