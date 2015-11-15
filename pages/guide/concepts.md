@@ -17,11 +17,11 @@ XCDL was designed beacause:
 
 * for better performance (size, optimisation, etc) libraries are not the solution, and compile time configuration is preferred;
 
-* it is crazy that although the software author knows very well:
+* it is crazy that although the software author knows very well
 
   * where the source folders are,
   * where the include folders are,
-  * which the custom compile options are,
+  * which are the custom compile options,
 
   most of the time users still need to enter these setting manually in their development tools, each time they create a new project that uses that piece of software.
 
