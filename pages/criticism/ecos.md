@@ -13,7 +13,7 @@ Developed in the very early 2000 (the manual date is 2001), the eCos CDL was a r
 
 Although the CDL design was pretty general, being created to support eCos, the CDL was perceived as an eCos specific part, and generally avoided.
 
-Another important issue was the complexity of the CDL scripts, and to some (including myself) the Tcl syntax of the scripts, a bit outdated in the world of XML configuration files.
+Another important issue was the complexity of the CDL scripts, and to some (including myself) the Tcl syntax of the scripts, a bit outdated in the world of JSON/YML.
 
 Other issues:
 
@@ -23,9 +23,9 @@ Other issues:
 
 XCDL inherits the core concepts from CDL, however some changes were applied.
 
-### Tcl replaced by XML
+### Tcl replaced by JSON & JavaScript
 
-After a prototyping phase which used Python instead of Tcl, the final format used for the XCDL metadata was settled to XML, with a relatively simple logical structure, an object has a name, a list of string properties and an optional list of children nodes.
+After a prototyping phase which used Python instead of Tcl, the final format used for the XCDL metadata was settled to JSON, with its simple logical structure, a node has a name, a list of properties and an optional array of children nodes.
 
 ### Naming scheme shortened
 
@@ -33,7 +33,7 @@ In CDL, the object names were in fact C preprocessor definitions, and the scope 
 
 The first step to separate the node names from the preprocessor definitions was attempted in the Python implementation of XCDL, where separate IDs were used. This solution was perfectly functional, but since the IDs were expected to be unique in the entire object space, they were quite long and hard to handle, not to mention that they were not at all fit to be represented in a graphical user interface.
 
-In the XML version of XCDL the naming scheme was shortened, and object names were required to be unique only in the scope of the parent node, similar to files in a folder. Recursively applied, this rule produces unique names as long as the entire path is used (again, similarly to files in a file system).
+In the JSON version of XCDL the naming scheme was shortened, and object names were required to be unique only in the scope of the parent node, similar to files in a folder. Recursively applied, this rule produces unique names as long as the entire path is used (again, similarly to files in a file system).
 
 ### Explicit header file
 

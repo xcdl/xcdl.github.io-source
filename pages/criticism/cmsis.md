@@ -19,7 +19,7 @@ The second major disadvantage (partly understandable by its origins) is the deep
 
 ### Excessively complicated design
 
-Apparently started as a µVision feature, and, as such, inheriting µVision oddities, the CMSIS Pack design evolved unevenly in different directions, and lacking the elegance of a consistent design, up to a point where it can even be considered overengineered.
+Apparently started as a µVision feature, and, as such, inheriting µVision oddities, the CMSIS Pack design evolved unevenly in different directions, and lacking the elegance of a consistent design, up to a point where it can even be considered over-engineered.
 
 ### Non-portable examples
 
