@@ -82,6 +82,7 @@ The XCDL software is released under the [GPL License](https://www.gnu.org/licens
 * [MacPorts Guide](https://guide.macports.org/)
 * [Arch PKGBUILD](https://wiki.archlinux.org/index.php/PKGBUILD)
 * [NPM](https://www.npmjs.com) - the package manager for JS (special interest for the packet.json format)
+* [yotta](http://yottadocs.mbed.com) - mbed module manager
 
 ## Build tools
 
