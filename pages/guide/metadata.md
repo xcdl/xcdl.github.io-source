@@ -5,12 +5,14 @@ title: The XCDL metadata
 author: Liviu Ionescu
 ---
 
-The XCDL definitions are a key part of the XCDL component framework. All packages must come with at least one XCDL file, to describe that package to the framework. The information in that file includes details of all the configuration options and how to build the package. Implementing a new component or turning some existing code into an XCDL component always involves writing corresponding XCDL. This chapter provides a description of the XCDL language. Detailed information on specific parts of the language can be found in [The XCDL language specification](/The_XCDL_language_specification "wikilink").
+> Note: This file needs to be updated for JSON.
+
+The XCDL definitions are a key part of the XCDL component framework. All packages must come with at least one XCDL file, to describe that package to the framework. The information in that file includes details of all the configuration options and how to build the package. Implementing a new component or turning some existing code into an XCDL component always involves writing corresponding XCDL. This chapter provides a description of the XCDL language. Detailed information on specific parts of the language can be found in [Reference]({{ site.baseurl }}/reference/metadata/) page.
 
 Language overview
 -----------------
 
-XCDL originated as a representation in XML of the original eCos CDL definitions, then several changes were performed.
+XCDL originated as a representation in XML of the original eCos CDL definitions, then several changes were performed and the format was changed to JSON.
 
 A very simple XCDL file would look like this:
 

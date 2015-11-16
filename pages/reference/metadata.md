@@ -7,6 +7,8 @@ author: Liviu Ionescu
 tocLevels: 1
 ---
 
+> Note: This file needs to be updated for JSON.
+
 ## Introduction
 
 This chapter contains reference information for the main XCDL objects `<option>`, `<component>`, `<package>`; and `<interface>`, followed by the various properties such as `<activeIf>` and `<sourceFile>` in alphabetical order.
