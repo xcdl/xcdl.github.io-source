@@ -13,7 +13,7 @@ Well, if children can build complex toys from LEGO bricks, why couldn't we build
 
 ### Rationals
 
-XCDL was designed because:
+Simple reasons behind the XCDL component framework design:
 
 * for better performance (size, optimisation, etc) libraries are not the solution, and compile time configuration is preferred;
 
@@ -33,11 +33,31 @@ Why not pack together the actual source code with some simple and portable metad
 
 There may be multiple compliance levels, from simple to complex, each adding more metadata for supporting more functionality:
 
-1. add metadata to tell what other packages are required, which are the source folders, the include folders, and the custom compile options;
+1. pack the sources into an archive and add a minimal package metadata, to define dependencies on other packages;
+1. add metadata to define which are the source folders, the include folders, and the custom compile options;
 1. add metadata to group source files in related components, structured in a virtual hierarchy, with dependencies and conditions when these components are active/enabled;
 1. add metadata to define configuration options, also to be shown as nodes in the virtual hierarchy, with dependencies and formulas to compute option values with knowledge about the entire build environment;
-1. add metadata and templates to dynamically generate source files with content adapted to various configuration selections and options.
+1. add metadata and templates to dynamically generate source files with content adapted to various configuration selections and options;
 1. possibly more!
+
+### Benefits
+
+The main beneficiaries of the XCDL component framework are software developers, and benefits are multifold, during the project creation, during project lifecycle, and improved testability.
+
+#### Simplified project creation
+
+With proper metadata available, project creation is reduced to several clicks to select the main characteristics of the project; all required files will be pulled in by the dependencies, and all the usual project settings (source folders, include folders, compile options) will be automatically set by the XCDL project wizard.
+
+#### Simplified updates management
+
+If, during the lifetime of the project, other features that were not initially selected are needed (for example more device drivers, more application libraries, etc), the developer can invoke the XCDL project wizard and enable/disable further components and change any options; in the end the wizard will recompute all dependencies and update the project to use the new definitions.
+
+The same is true when new package versions are released (for example STM releases a new version of the HAL for the STM32F4 family and the stm32f4-hal xPack is updated); the developer can choose to stick to a given version, or upgrade to the latest version; the wizard will recompute all dependencies and update the project to use the new definitions.
+
+#### Improved testability
+
+With all metadata available in the packages, and the full configuration also saved as metadata, it is very easy to recreate the project from a script, and integrate the project build into a Continuous Integration systems (like Travis CI, or Jenkins/Hudson), greatly simplifying the definition and use of unit tests.
+
 
 ## Why XCDL? (the long version)
 

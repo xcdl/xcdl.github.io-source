@@ -13,7 +13,7 @@ The [XCDL project](https://github.com/xcdl) defines and implements a component f
 - [µOS++ IIIe](http://micro-os-plus.livius.net/) (as content for the components)
 - [GNU ARM Eclipse](http://gnuarmeclipse.github.io/)  (as graphical tools to manage the components).
 
-This project is hosted on [GitHub](https://github.com/xcdl).
+The XCDL project is hosted on [GitHub](https://github.com/xcdl).
 
 ## Credits
 
