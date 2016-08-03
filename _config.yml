@@ -13,7 +13,7 @@ exclude:
   - jekyll-serve.command
   - jekyll-build.command
   - atom.command
-  - localhost-4000.webloc
+  - localhost-4002.webloc
 
 # Used in sitemap.xml.
 url: "http://ilg-ul.github.io" # the base hostname & protocol for your site.

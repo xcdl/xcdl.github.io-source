@@ -5,20 +5,20 @@ title: XCDL Preprocessor syntax thoughts
 author: Liviu Ionescu
 ---
 
-## Problem
+## Challenge
 
-Define a template mechanism to generate source files, based on various external definitions.
+Define a preprocessing mechanism to be used in a wizard to generate source files (mainly C/C++), based on a template and various external definitions.
 
 ## Requirements
 
-* interfere as little as possible with the file language
+* interfere as little as possible with the native file source language
 * do not interfere with other tools, like Doxygen
 * be relatively simple to process
 * syntax must be as standard as possible
 
 ## Embed metadata inside comments
 
-The natural implementation of the first requirement is similar to that used by Doxygen, i.e. insert the template metadata as standard comments.
+The natural implementation of the first requirement is similar to that used by Doxygen, i.e. insert the preprocessing metadata as standard comments.
 
 This has two major advantages:
 
@@ -27,7 +27,7 @@ This has two major advantages:
 
 ## Inspiration
 
-Although there are many other preprocessing solutions, none that I know meets the requirements.
+Although there are many other similar solutions, none that I know meets the requirements.
 
 ### Jekyll
 
@@ -40,7 +40,7 @@ The [Jekyll](https://jekyllrb.com) static web generator uses the [Liquid](https:
   url="{{ url | append: ".html" }}";{% endraw %}
 ```
 
-Embedding this into comments would look like this:
+Embedding this metadata into C/C++ comments would look like this:
 
 ```
 {% raw  %}/* {% if user %} */
@@ -49,7 +49,7 @@ Embedding this into comments would look like this:
   url="/* {{ url | append: ".html" }} */";
 ```
 
-The syntax remains relatively easy to read, but it introduces a new language, that needs to be parsed and processed.
+The syntax remains relatively easy to read, but the Liquid tags still introduce a new language, that needs to be parsed and processed.
 
 ### ST CubeMX
 
@@ -265,17 +265,27 @@ uint8_t %'ModuleName'%.%RenameFile(const uint8_t *srcFileName, const uint8_t *ds
 
 The point of Processor Expert is to implement some kind of objects, with each instance fully generated from a template. People I respect consider that once the components are written, using them is quite convenient. The real challenge is to write these components, and this process can be done only with Processor Expert.
 
-The components can be found in the `C:\ProgramData\Processor Expert\PEXDRV_PE5_3` folder
+The syntax is quite complex, with commands similar to the C preprocessor (`%ifdef name`), but also with complex substitutions, like `%@Shell@'ModuleName'%.name(...)`.
+
+The components can be found in the `C:\ProgramData\Processor Expert\PEXDRV_PE5_3` folder.
+
+### AC6 System Workbench
+
+The STM32 System Workbench currently does not use templates.
+
+### Eclipse CDT template wizard
+
+The Eclipse CDT template mechanism uses several _processes_, mainly to copy files to change the project configuration (add symbol definitions, folders, etc). Preprocessing is basic, only macro substitutions.
 
 ## Scripting proposal
 
-It looks like using a kind of scripting language is inevitable. Defining a custom one, even inspired by an existing solution, is possible, but implementing it requires significant efforts.
+It looks like using some kind of scripting language is inevitable. Defining a custom one, even inspired by an existing solution, is possible, but implementing it requires significant efforts.
 
 With the omnipresent JavaScript, a better solution might be to implement the scripting part in JavaScript.
 
-The DAVE idea to have the entire template as a script is one option. An even better option would be to generate this script.
+The DAVE idea to have the entire template as a script is one option. An even better option seems to be to generate this script.
 
-So, the main idea is to design things in such a way to allow a relatively simple conversion of the entire template to a JavaScript, and to execute it.
+So, the approach used by the XCDL preprocessor is to convert the entire template file into JavaScript, and to execute it.
 
 ## JavaScript implementations
 
@@ -287,14 +297,14 @@ Mature JavaScript implementations are now available for most platforms and langu
 
 ## Possible syntax solutions
 
-Assuming the tags need to be encoded as comments, for C/C++ these are two solutions:
+Assuming the tags will be encoded as comments, for C/C++ two possible solutions are:
 
 * `/*JS ... */` and `//JS`
 * `/*@ ... */` and `//@ ...`
 
 ## JavaScript
 
-With the choice for JavaScript and the requirement that scripts be encoded as comments, the templates can be converted to JavaScript and then interpreted as such.
+With the choice for JavaScript and the requirement that scripts be encoded as comments, the process to convert the templates to JavaScript is relatively straightforward: pass the tags as-is, and encode each source line in an output call.
 
 For example:
 
@@ -311,7 +321,7 @@ o("... C/C++ lines ...\n");
 }
 ```
 
-where `o()` is a function that outputs the string to the destination file.
+where `o(str)` is a function that outputs the string to the destination file.
 
 Substitutions are identified and the generated JavaScript code converts the values to strings and outputs them.
 
@@ -320,6 +330,7 @@ Substitutions are identified and the generated JavaScript code converts the valu
 ```
 
 translates to:
+
 ```
 o("#define VARIABLE (");o(String(value+1));o(")\n");
 ```
@@ -330,21 +341,81 @@ o("#define VARIABLE (");o(String(value+1));o(")\n");
 
 Personally I prefer `/*JS`, but it is one character longer. The lower case alternative (`/*js`) is also possible.
 
-### `/*$()*/` vs shorter `$()`
+### `$()` vs `/*$()*/`
 
-The first version seems easier to parse, since it stops at the first occurrence of `)*/`, but is longer and is less readable.
+The comment version seems easier to parse, since it stops at the first occurrence of `)*/`, but is longer and is less readable.
 
-The second version is definitely more attractive, but requires a more elaborate parsing of the content. For C/C++, the syntax overlaps a legal expression (`$` is a legal identifier, so `$()` is actually a function call).
+The short version is definitely more attractive, but requires a more elaborate parsing of the content. For C/C++, the syntax overlaps a legal expression (`$` is a legal identifier, so `$()` is actually a function call).
 
 Please note that formatters may add a space in front of the parenthesis (like `$ ()`).
 
 ## Examples
 
-With these conventions, the above samples would look like:
+With these conventions, the first sample would look like:
 
 ```
-/*JS if (defined(user)) { */
-  hello("$(user.name)!");
-/*JS } */
-  url="$(append(url,'.html')";
+  /*JS if (defined('user')) { */
+  hello ("$(user.name)!");
+  /*JS } */
+  url = "$(url+'.html'))";
+```
+
+As expected, this is perfectly legal C syntax. The JavaScript code uses a function `defined()` that checks if an object is defined, and, if so, expands the `name` attribute of this object.
+
+The CubeMX code would probably look easier to read in JavaScript.
+
+The DAVE code, assuming we also have a Groovy parser, would look like:
+
+```
+/*GV package Model.Common; GV*/
+
+/*******************************************************************************
+ Copyright (c) 2014, Infineon Technologies AG                                 **
+ All rights reserved.                                                         **
+*******************************************************************************/
+
+/*******************************************************************************
+ * @brief This function initializes the Apps Init Functions.
+ *
+ * @param[in]  None
+ *
+ * @return  DAVE_STATUS_t <BR>
+ *
+ * <b>Reentrant: No </b><BR>
+ *
+ ******************************************************************************/
+
+DAVE_STATUS_t DAVE_Init(void)
+{
+  DAVE_STATUS_t init_status;
+
+  init_status = DAVE_STATUS_SUCCESS;
+
+/*GV
+def appsList = daveEnv.project.getTopLevelApps();
+def apps = [];
+def appName
+def instanceLabel
+
+ for (def app : appsList ) {
+ 	 if(app.initProvider) {
+ 		 apps.add(app);
+	 }
+} GV*/
+
+/** @Initialization of Apps Init Functions */
+
+/*GV for (def app : apps ) {  GV*/
+/*GV   appName = app.getClass().getSimpleName() GV*/
+/*GV 	 instanceLabel = app.getInstanceLabel() GV*/
+  if (init_status == DAVE_STATUS_SUCCESS)
+  {
+    /**  Initialization of $(appName) App instance $(instanceLabel) */
+    init_status = (DAVE_STATUS_t)$(appName)_Init(&$(instanceLabel));
+  }  
+/*GV } GV*/
+
+  return init_status;
+} /**  End of function DAVE_Init */
+
 ```
