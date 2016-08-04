@@ -53,7 +53,7 @@ TBD
 ## Work in progress
 
 * [Scratchpad]({{ site.baseurl }}/work/scratchpad/)
-* [Preprocessor]({{ site.baseurl }}/work/preprocessor/)
+* [Template preprocessor syntax]({{ site.baseurl }}/work/preprocessor/)
 
 ## License
 

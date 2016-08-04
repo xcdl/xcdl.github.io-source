@@ -1,7 +1,7 @@
 ---
 layout: page
 permalink: /work/preprocessor/
-title: XCDL Preprocessor syntax thoughts
+title: XCDL templates preprocessor syntax proposal
 author: Liviu Ionescu
 ---
 
