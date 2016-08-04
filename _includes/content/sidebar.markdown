@@ -14,6 +14,6 @@
 
 #### License
 
-* [GPL](https://www.gnu.org/licenses/gpl.html)
+* [MIT](https://opensource.org/licenses/MIT)
 
 #### [About]({{ site.baseurl }}/about/)
