@@ -10,9 +10,7 @@ email: il@livius.net
 destination: _site
 exclude:
   - README.md
-  - jekyll-serve.command
-  - jekyll-build.command
-  - atom.command
+  - '*.command'
   - localhost-4002.webloc
 
 # Used in sitemap.xml.
