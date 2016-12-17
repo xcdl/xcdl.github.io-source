@@ -7,32 +7,42 @@ author: Liviu Ionescu
 
 ## From [_npm's "funny" coding style_](https://docs.npmjs.com/misc/coding-style)
 
-- keep lines shorter than 80 characters
-- indentation is two spaces
-- curly braces belong on the same line
-```
-function () {
+### Line length
+
+Keep lines shorter than **80** characters
+
+### Indentation
+
+Indentation is **two spaces**
+
+### Curly braces
+
+Curly braces belong on the same line
+
+``` js
+const f = function () {
   while (foo) {
     bar()
   }
 }
 ```
-- don't use semicolons, except when required
-```
+
+### Semicolons
+
+Don't use semicolons, except when required; for example to prevent the expression from being interpreted as a function call or property access, respectively.
+
+``` js
 ;(x || y).doSomething()
 ;[a, b, c].forEach(doSomething)
-for (var i = 0; i < 10; i ++) {
-  switch (state) {
-    case 'begin': start(); continue
-    case 'end': finish(); break
-    default: throw new Error('unknown state')
-  }
-  end()
-}
+
 ```
-- put the comma at the start of the next line, directly below the token that starts the list
-```
-var magicWords = [ 'abracadabra'
+
+### Comma first
+
+Put the **comma at the start** of the next line, directly below the token that starts the list
+
+``` js
+const magicWords = [ 'abracadabra'
                  , 'gesundheit'
                  , 'ventrilo'
                  ]
@@ -44,24 +54,46 @@ var magicWords = [ 'abracadabra'
   , etc
   , somethingElse
 ```
-- use single quotes for strings except to avoid escaping
+
+### Quotes
+
+Use single quotes for strings except to avoid escaping
+
+``` js
+const ok = 'String contains "double" quotes'
+const alsoOk = "String contains 'single' quotes or apostrophe"
+const paramOk = `Back quotes string with ${parameter}`
 ```
-var ok = 'String contains "double" quotes'
-var alsoOk = "String contains 'single' quotes or apostrophe"
-```
-- put a single space in front of `(` for anything other than a function call
-- use named functions
-- always create a new `Error` object with your message
+
+### Whitespaces
+
+Put a single space in front of `(` for anything other than a function call
+
+### Functions
+
+Use named functions.
+
+- always create a new `Error` object with your message (`new Error('msg')`)
 - logging is done using the [`npmlog`](https://github.com/npm/npmlog) utility
+
+### Case, naming, etc
+
 - use **lowerCamelCase** for multiword identifiers when they refer to objects, functions, methods, properties, or anything not specified in this section
 - use **UpperCamelCase** for class names (things that you'd pass to "new")
 - use **all-lower-hyphen-css-case** for multiword filenames and config keys
 - use named functions, they make stack traces easier to follow
 - use **CAPS\_SNAKE\_CASE** for constants, things that should never change and are rarely used
+
+### null, undefined, false
+
 - boolean variables and functions should always be either `true` or `false`
 - when something is intentionally missing or removed, set it to `null`
 - don't set things to `undefined`
 - boolean objects are verboten
+
+### Exceptions
+
+When using callbacks, never to ever ever throw anything. It's worse than useless. Just send the error message back as the first argument to the callback.
 
 ## From [node.js modules](https://nodejs.org/dist/latest-v6.x/docs/api/modules.html)
 
@@ -69,7 +101,7 @@ var alsoOk = "String contains 'single' quotes or apostrophe"
 
 To add functions and objects to the root of your module, you can add them to the special `exports` object:
 
-```
+``` js
 const PI = Math.PI
 exports.area = (r) => PI * r * r
 exports.circumference = (r) => 2 * PI * r
@@ -77,16 +109,16 @@ exports.circumference = (r) => 2 * PI * r
 
 If you want the root of your module's export to be a function (such as a constructor) or if you want to export a complete object in one assignment instead of building it one property at a time, assign it to `module.exports` instead of `exports`.
 
-```
-const square = require('./square.js');
-var mySquare = square(2);
-console.log(`The area of my square is ${mySquare.area()}`);
+``` js
+const square = require('./square.js')
+const mySquare = square(2)
+console.log(`The area of my square is ${mySquare.area()}`)
 
 // assigning to exports will not modify module, must use module.exports
 module.exports = (width) => {
   return {
     area: () => width * width
-  };
+  }
 }
 ```
 
@@ -94,7 +126,7 @@ module.exports = (width) => {
 
 When a file is run directly from Node.js, require.main is set to its module. That means that you can determine whether a file has been run directly by testing
 
-```
+``` js
 require.main === module
 ```
 
@@ -107,13 +139,14 @@ Multiple calls to require('foo') may not cause the module code to be executed mu
 ### The module wrapper
 
 Before a module's code is executed, Node.js will wrap it with a function wrapper that looks like the following:
-```
+
+``` js
 (function (exports, require, module, __filename, __dirname) {
-// Your module code actually lives in here
+  // Your module code actually lives in here
 });
 ```
 
-In each module, the module free variable is a reference to the object representing the current module. For convenience, module.exports is also accessible via the exports module-global. module isn't actually a global but rather local to each module.
+In each module, the module free variable is a reference to the object representing the current module. For convenience, `module.exports` is also accessible via the exports module-global. module isn't actually a global but rather local to each module.
 
 The `module.exports` object is created by the Module system. Sometimes this is not acceptable; many want their module to be an instance of some class. To do this, assign the desired export object to `module.exports`. Note that assigning the desired object to `exports` will simply rebind the local exports variable, which is probably not what you want to do.
 
@@ -133,79 +166,81 @@ Use `const` by default, and only use `let` when you know a variable’s value ne
 
 Use default parameters.
 
-```
-function makeRequest(url, timeout = 2000, callback = function() {}) {
-    // the rest of the function
+``` js
+const makeRequest = function (url, timeout = 2000, callback = function() {}) {
+  // the rest of the function
 }
-function add(first, second = getValue(first)) {
-    return first + second;
+
+const add = function (first, second = getValue(first)) {
+  return first + second
 }
 ```
 
 Use _rest_ parameters.
 
-```
-function pick(object, ...keys) {
-    let result = Object.create(null);
-    for (let i = 0, len = keys.length; i < len; i++) {
-        result[keys[i]] = object[keys[i]];
-}
-    return result;
+``` js
+const pick = function (object, ...keys) {
+  let result = Object.create(null)
+  for (let i = 0, len = keys.length; i < len; i++) {
+    result[keys[i]] = object[keys[i]]
+  }
+  return result
 }
 ```
 
 The `Function` constructor.
 
-```
-var add = new Function("first", "second = first",
-                 "return first + second");
-console.log(add(1, 1));     // 2
-console.log(add(1));        // 2
+``` js
+var add = new Function("first", 'second = first',
+                 'return first + second')
+console.log(add(1, 1))     // 2
+console.log(add(1))        // 2
 ```
 
 JavaScript has two different internal-only methods for functions: `[[Call]]` and `[[Construct]]`. When a function is called without new, the `[[Call]]` method is executed, which executes the body of the function as it appears in the code. When a function is called with new, that’s when the `[[Construct]]` method
 is called. The `[[Construct]]` method is responsible for creating a new object, called the instance, and then executing the function body with this set to the instance. Functions that have a `[[Construct]]` method are called constructors.
 
-```
-function Person(name) {
-    if (this instanceof Person) {
-        this.name = name;
-    } else {
-        throw new Error("You must use new with Person.")
-    }
+``` js
+const Person = function (name) {
+  if (this instanceof Person) {
+    this.name = name
+  } else {
+    throw new Error('You must use new with Person.')
+  }
 }
-var person = new Person("Nicholas");
-var notAPerson = Person.call(person, "Michael");    // works!
+var person = new Person('Nicholas')
+var notAPerson = Person.call(person, 'Michael')    // works!
 ```
 
 Block-level functions
 
-```
-"use strict";
+``` js
+'use strict';
+
 if (true) {
-    console.log(typeof doSomething); // throws an error
-    let doSomething = function () {
-        // empty
-    }
-    doSomething();
+  console.log(typeof doSomething) // throws an error
+  let doSomething = function () {
+    // empty
+  }
+  doSomething()
 }
-console.log(typeof doSomething);
+console.log(typeof doSomething)
 ```
 
-Arrow functions are functions defined with a new syntax that uses an arrow (=>)
+Arrow functions are functions defined with a new syntax that uses an arrow (`=>`)
 
-- **No this, super, arguments, and new.target bindings** The values of this, super, arguments, and new.target inside the function are defined by the closest containing non-arrow function
+- **No this, super, arguments, and new.target bindings** The values of `this`, `super`, arguments, and new.target inside the function are defined by the closest containing non-arrow function
 - **Cannot be called with new** Arrow functions do not have a [[Construct]] method and therefore cannot be used as constructors. Arrow functions throw an error when used with new.
 - **No prototype** Because you can’t use new on an arrow function, there’s no need for a prototype. The prototype property of an arrow function doesn’t exist.
 - **Can’t change this** The value of this inside the function can’t be changed. It remains the same throughout the entire life cycle of the function.
 - **No arguments object** Because arrow functions have no arguments binding, you must rely on named and rest parameters to access function arguments.
 - **No duplicate named parameters** Arrow functions cannot have duplicate named parameters in strict or non-strict mode, as opposed to non-arrow functions, which cannot have duplicate named parameters only in strict mode.
 
-```
-let sum = (num1, num2) => num1 + num2;
+``` js
+let sum = (num1, num2) => num1 + num2
 // effectively equivalent to:
 let sum = function(num1, num2) {
-    return num1 + num2;
+  return num1 + num2
 };
 ```
 
