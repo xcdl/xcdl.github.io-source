@@ -53,6 +53,10 @@ Embedding this metadata into C/C++ comments would look like this:
 
 The syntax remains relatively easy to read, but the Liquid tags still introduce a new language, that needs to be parsed and processed.
 
+### Jinja2
+
+The default syntax of [Jinja2](http://jinja.pocoo.org/docs/dev/) matches Django syntax in many ways, and it also very similar to the syntax of [Liquid](https://shopify.github.io/liquid/) metadata, so it will not be repeated here.
+
 ### ST CubeMX
 
 CubeMX uses `.ftl` files with a complex script syntax, somehow inspired by xml; tags may come in pairs (`[if]`, `[/if]`), and substitutions are encoded like macros (`${argument.name}`).
