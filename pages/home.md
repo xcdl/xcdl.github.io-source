@@ -58,6 +58,7 @@ TBD
 ## Developer
 
 - [JavaScript style guide]({{ site.baseurl }}/develop/js-style-guide/)
+- 
 
 ## License
 
@@ -118,3 +119,4 @@ For an exhaustive list see [Wikipedia](https://en.wikipedia.org/wiki/Comparison_
   - [Classical Inheritance in JavaScript](http://javascript.crockford.com/inheritance.html)
 - [node.js](https://nodejs.org/en/)
 - [npm](https://www.npmjs.com/)
+- [Felix Geisendörfer's Node.js Style Guide](https://github.com/felixge/node-style-guide)
