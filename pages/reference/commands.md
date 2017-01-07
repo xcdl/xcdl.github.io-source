@@ -13,144 +13,149 @@ This chapter contains reference information for the XCDL / xPack command line ap
 
 TODO: add/update content
 
-### xcdl
-
-#### make
-
-Perform a sequence of tasks to make something, typically to build an executable. 
-
-Originally the command was named `build`, but `make` seems more generic.
-
-#### run
-
-Run scripts, similarly to `npm run name`. It should allow to pass arguments `npm run name -- 1 2 3` and possibly use configs.
-
-Inspired from [How to Use npm as a Build Tool](https://www.keithcirkel.co.uk/how-to-use-npm-as-a-build-tool/).
-
-Warning: running scripts on Windows requires attention.
-
-### xpack
+## xpack
 
 The `xpack` command is the XCDL package manager, equivalent to `npm`.
 
 For reference, see [npm](https://docs.npmjs.com).
 
-#### access
+### access
 
 Similar to `npm access`.
 
-#### cache
+### build
+
+Similar to `npm build`, but it might have different semantics.
+
+### cache
 
 Similar to `npm cache`.
 
-#### completion
+### completion
 
 Similar to `npm completion`.
 
-#### config
+### config
 
 Similar to `npm config`.
 
-#### deprecate
+### deprecate
 
 Similar to `npm deprecate`.
 
-#### dist-tag
+### dist-tag
 
 Similar to `npm dist-tag`.
 
-#### init
+### init
 
 Similar to `npm init`.
 
-#### install
+### install
 
 Similar to `npm install`.
 
-#### login
+### login
 
 Similar to `npm login`.
 
-#### logout
+### logout
 
 Similar to `npm logout`.
 
-#### ls
+### ls
 
 Similar to `npm ls`.
 
-#### owner
+### owner
 
 Similar to `npm owner`.
 
-#### pack
+### pack
 
 Similar to `npm pack`.
 
-#### ping
+### ping
 
 Similar to `npm ping`.
 
-#### publish
+### publish
 
 Similar to `npm publish`.
 
-#### run-script
+### run-script
 
 Similar to `npm run-script`.
 
-#### search
+Run scripts, similarly to `npm run-script name`. It should allow to pass arguments `npm run-script name -- 1 2 3` and possibly use configs.
+
+Inspired from [How to Use npm as a Build Tool](https://www.keithcirkel.co.uk/how-to-use-npm-as-a-build-tool/).
+
+Warning: running scripts on Windows requires attention.
+
+### search
 
 Similar to `npm search`.
 
-#### star
+### star
 
 Similar to `npm star`.
 
-#### stars
+### stars
 
 Similar to `npm stars`.
 
-#### uninstall
+### uninstall
 
 Similar to `npm uninstall`.
 
-#### unpublish
+### unpublish
 
 Similar to `npm unpublish`.
 
-#### update
+### update
 
 Similar to `npm update`.
 
-#### unstar
+### unstar
 
 Similar to `npm unstar`.
 
-#### version
+### version
 
 Similar to `npm version`.
 
-#### whoami
+### whoami
 
 Similar to `npm whoami`.
 
+## xcdl
 
-### xsvd
+Commands to manipulate the XCDL metadata.
+
+TODO: define.
+
+### make
+
+Possibly a more generic version of `xpack build`, if XCDL can be extended with features specific to cmake/autotools/etc.
+
+Perform a sequence of tasks to make something, similar to `make`. 
+
+## xsvd
 
 This group of commands are currently used to generate the files used by GNU ARM Eclipse QEMU.
 
 **XSVD** files are the XCDL equivalent of CMSIS SVD files, but in JSON instead of XML.
 
-#### convert
+### convert
 
 Convert a CMSIS SVD file to XSVD.
 
-#### patch
+### patch
 
 Modify an XSVD file by adding definitions from a patch file.
 
-#### gen-code
+### gen-code
 
 Generate source code for QEMU peripherals.
 
