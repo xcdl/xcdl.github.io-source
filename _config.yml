@@ -3,7 +3,7 @@
 # Without a clear rule enforced, both title and name are used.
 title: XCDL / xPack
 name: XCDL / xPack
-description: The eXtensible Component Definition Language component framework
+description: The eXtensible Component Definition Language framework
 
 email: il@livius.net
 
@@ -83,4 +83,4 @@ useExistingAnchors: true
 css-date: 201510121951
 
 # Content copyright. Update it to your needs.
-copyright-message: "© 2015 Liviu Ionescu"
+copyright-message: "© 2016 Liviu Ionescu"
