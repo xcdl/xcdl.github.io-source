@@ -1,20 +1,24 @@
 # Site settings.
 
 # Without a clear rule enforced, both title and name are used.
-title: XCDL / xPack
-name: XCDL / xPack
-description: The eXtensible Component Definition Language framework
+title: xPack / XCDL
+name: xPack / XCDL
+description: The xPack eXtensible Component Definition Language framework
 
 email: il@livius.net
 
 destination: _site
+
+# 'vendor' appears in Travis
 exclude:
   - README.md
+  - .github
   - '*.command'
-  - localhost-4002.webloc
-
-# Used in sitemap.xml.
-url: "http://ilg-ul.github.io" # the base hostname & protocol for your site.
+  - '*.webloc'
+  - Gemfile
+  - Gemfile.lock
+  - vendor
+  - scripts
 
 # The subpath of your site, e.g. /blog (note the leading slash and the
 # absence of a trailing slash).
@@ -61,8 +65,8 @@ gems:
 
 # References to the project associated with the web.
 github-username:  ilg-ul
-github-project-name: xcdl/xcdl-go
-github-project-url: http://github.com/xcdl/xcdl-go
+github-project-name: xcdl/xcdl-js
+github-project-url: http://github.com/xcdl/xcdl-js
 
 # Change it to refer to project's page
 # facebook-url: https://facebook.com/ilg-ul/
@@ -83,4 +87,4 @@ useExistingAnchors: true
 css-date: 201510121951
 
 # Content copyright. Update it to your needs.
-copyright-message: "© 2016 Liviu Ionescu"
+copyright-message: "© 2017 Liviu Ionescu"
