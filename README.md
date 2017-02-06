@@ -1,5 +1,6 @@
-# The XCDL Web Site source
+[![Build Status](https://travis-ci.org/xcdl/xcdl.github.io-source.svg?branch=master)](https://travis-ci.org/xcdl/xcdl.github.io-source)
 
+# The XCDL Web Site source
 
 ## Overview
 
