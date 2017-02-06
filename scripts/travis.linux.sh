@@ -110,6 +110,8 @@ function do_script() {
   do_run git add --all .
   do_run git commit -m "Travis CI Deploy of ${TRAVIS_COMMIT}" 
 
+  do_run git diff
+  
   # git status
 
   # Temporarily disable deployment, due to 
