@@ -1,0 +1,56 @@
+# Travis CI configuration file to validate and possibly deploy 
+# the xPack/XCDL Jekyll site.
+
+# To skip a CI build, add [skip ci] anywhere in the commit message.
+
+# Use the new Debian 14 containers.
+dist: trusty
+sudo: false
+
+language: ruby
+rvm:
+  - 2.3.1
+  
+env:
+  global:
+    - GITHUB_DEST_REPO="xcdl/xcdl.github.io"
+    - GIT_COMMIT_USER_EMAIL="ilg@livius.net"
+    - GIT_COMMIT_USER_NAME="Travis CI"
+    - NOKOGIRI_USE_SYSTEM_LIBRARIES=true
+    # The secure token is 'GITHUB_TOKEN=...' and was generated with:
+    # $ travis encrypt -r xcdl/xcdl.github.io-source GITHUB_TOKEN=...
+    - secure: "cKpMz5yoyLCyexYsTCU8NVKmXwBi1J8wFAvGBWItpQNLcZ0yBz/SsTmiyYwLC71BgcH4fQV84fL26dFmKqj88sqfUv27mL9tfjMcZf61ugIK+LAQ+dunlw5prs2zui4bk0ZewwXj0OWgLTpWsOxmoBCjh3AkL+rBR/IfWxE/MlcXc7UrbXwDMZb4NlT7tZIcs2j8ycTsMiyFYa0jGxZMhbcy6+ZR497qDYlweaSCZKE/Jh4aJBOl8FfMYIJ3jcdMQLGyMWIJXgmOiUUyqQ6DqyKzg8Mu+v2mJjWh+taT5ZYmi9LxxvYdfUSfKYaGXqiTdVen8LiW/AE2EeC4ulgrXZPruaQMoICbF5wt6wmic2bSlDvE/N9sayXVIO8xQjzMRuApVtcH7JjXzUmbKL+67qwFfmG3bsXjmWa/QBdvAvb7k8I/IUCgVe2P9k7UTYIBEdFxvHeBxUndpFDtk1vQjTStjjzLJRpaqt9zOKJkc30Z59YwxwGp6rHR3z6NwKiFDC/ka9AotQgjeyOfbhhMImW9sS3/nkmGnb4I34PoTcnWharHDewUo/6ftpzXZFVNP+mAKG5pIfztRh84Bsx6MLvmV8ra+UIAZypv/2T9EuY14we2U+9CBFpixZWED+35sHtTg4rmvelKQoQMlUdFWgHkIt6cMd0+s37g6heS0wc="
+
+# Install dependencies.
+# addons:
+#  apt:
+#    packages:
+#      - ...
+
+before_install:
+  - bash scripts/travis.linux.sh before_install
+
+before_script:
+  - bash scripts/travis.linux.sh before_script
+
+script:
+  - bash scripts/travis.linux.sh script
+
+# -----------------------------------------------------------------------------
+# Unused.
+
+# after_success:
+#  - bash scripts/travis.linux.sh after_success
+
+# after_failure:
+#  - bash scripts/travis.linux.sh after_failure
+
+# Deploy via script not functional (or not understood).
+# deploy:
+#  provider: script
+#  script: bash scripts/travis.linux.sh deploy
+#  on:
+#    branch: master
+  
+# after_script:
+#  - bash scripts/travis.linux.sh after_script
