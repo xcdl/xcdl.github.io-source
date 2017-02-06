@@ -76,7 +76,7 @@ function do_script() {
 
   # Validate images and links (internal & external).
   bundle exec htmlproofer \
-  --url-ignore="" \
+  --url-ignore="https://jekyllrb.com,https://www.keithcirkel.co.uk/how-to-use-npm-as-a-build-tool/" \
   "${site}"
 
   # ---------------------------------------------------------------------------
