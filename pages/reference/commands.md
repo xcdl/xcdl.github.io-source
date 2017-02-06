@@ -27,6 +27,25 @@ Similar to `npm access`.
 
 Similar to `npm build`, but it might have different semantics.
 
+```
+xpack build [--target <name>] [--toolchain <name>] [--profile <name>] -- ...
+xpack build --test <name> ... [--target <name>] [--toolchain <name>] [--profile <name>] -- ...
+xpack build --tests -- ...
+```
+
+Options:
+
+- `--target <name>`: the target name, like `stm32f4discovery`; if missing, the package default target is used;
+- `--toolchain <name>`: the toolchain name, like `gcc`, `clang`; if missing, the package default toolchain or the target default toolchain is used;
+- `--profile <name>`: the profile name, like `debug`, `release`; if missing, `debug` is used
+- `--test <name> ...`: the list of test names
+- `--tests`: build all tests, for all targets, toolchains and profiles
+
+The result of the build is a sub-folder under `build`, like:
+
+- `build/target-toolchain-profile`, for application builds;
+- `build/test-name-target-toolchain-profile`, for tests.
+
 ### cache
 
 Similar to `npm cache`.
@@ -58,6 +77,12 @@ Similar to `npm install`.
 ### login
 
 Similar to `npm login`.
+
+Options:
+
+- `--dep <url>`: force a specific dependency that will override the package dependencies.
+
+
 
 ### logout
 
@@ -104,6 +129,30 @@ Similar to `npm star`.
 ### stars
 
 Similar to `npm stars`.
+
+### target
+
+Manage targets.
+
+```
+xpack target <name>
+xpack target
+```
+
+### test
+
+Run a specific test, or all tests.
+
+```
+xpack test <name> [--target <name>] [--toolchain <name>] [--profile <name>]
+xpack test
+```
+
+### toolchain
+
+Manage toolchains.
+
+TODO
 
 ### uninstall
 

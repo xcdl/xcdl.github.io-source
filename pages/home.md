@@ -58,7 +58,6 @@ TBD
 ## Developer
 
 - [JavaScript style guide]({{ site.baseurl }}/develop/js-style-guide/)
-- 
 
 ## License
 
@@ -89,6 +88,11 @@ The XCDL software is released under the [MIT](https://opensource.org/licenses/MI
 - [NPM](https://www.npmjs.com) - the package manager for JS (special interest for the packet.json format)
 - [yotta](http://yottadocs.mbed.com) - mbed module manager
 
+## IoT development environments
+
+- [mBed OS](https://www.mbed.com/en/development/mbed-os/#)
+- [Apache mynewt](https://mynewt.apache.org)
+
 ## Build tools
 
 For an exhaustive list, see [Wikipedia](https://en.wikipedia.org/wiki/List_of_build_automation_software).
@@ -100,7 +104,7 @@ For an exhaustive list, see [Wikipedia](https://en.wikipedia.org/wiki/List_of_bu
 - [Gradle](https://gradle.org/) (written in Groovy)
 - [CMake](http://www.cmake.org/) (written in C++; uses native builders like make)
 - [Waf](https://github.com/waf-project/waf) (a build tool written in Python)
-- [GNU Make](https://www.gnu.org/software/make/)
+- [GNU Make](https://www.gnu.org/software/make/) (the classical tool; hopeless for folders with spaces)
 
 ## Continuous integration
 
@@ -108,7 +112,7 @@ For an exhaustive list see [Wikipedia](https://en.wikipedia.org/wiki/Comparison_
 
 - [Hudson](http://hudson-ci.org/) (the original Sun project, donated by Oracle to the Eclipse Foundation)
 - [Jenkins](http://jenkins-ci.org/) (the more active fork, backed by the project creator)
-- [Travis](https://travis-ci.org)
+- [Travis](https://travis-ci.org) (the GitHub prefered solution, very good integration)
 
 ## JavaScript resources
 
