@@ -46,10 +46,10 @@ function do_before_install() {
 
   echo "Before install, bring extra tools..."
 
-  do_run add-apt-repository ppa:git-core/ppa
-  do_run  apt-get update
-  do_run  apt-get install git
-  do_run git --version
+  # do_run add-apt-repository ppa:git-core/ppa
+  # do_run apt-get update
+  # do_run apt-get install git
+  # do_run git --version
 
   cd "${HOME}"
 
