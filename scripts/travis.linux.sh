@@ -76,6 +76,8 @@ function do_script() {
 
   cd "${slug}"
 
+  find pages _posts -type f -name '*.md' -print -exec git log --format=%ci -- {} \;
+
   # Be sure the 'vendor/' folder is excluded, 
   # otherwise a strage error occurs.
   do_run bundle exec jekyll build --destination "${site}"
