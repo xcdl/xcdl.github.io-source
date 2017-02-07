@@ -76,7 +76,7 @@ function do_script() {
 
   cd "${slug}"
 
-  find pages _posts -type f -name '*.md' -print -exec git log --format=%ci -- {} \;
+  find pages _posts -type f -name '*.md' -print -exec git log --format=%ai -- {} \;
 
   # Be sure the 'vendor/' folder is excluded, 
   # otherwise a strage error occurs.
