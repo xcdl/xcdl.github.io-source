@@ -64,6 +64,11 @@ function do_before_script() {
 
   echo "Before starting the test, clone the destination repo..."
 
+  do_run date
+  do_run git clone https://github.com/xcdl/xcdl.github.io-source.git /tmp/xcdl.github.io-source.git
+  cd /tmp/xcdl.github.io-source.git
+  do_run find pages _posts -type f -name '*.md' -print -exec git log --format=%ci -- {} \;
+
   cd "${HOME}"
 
   do_run git config --global user.email "${GIT_COMMIT_USER_EMAIL}"
@@ -81,7 +86,7 @@ function do_script() {
 
   cd "${slug}"
 
-  do_run find pages _posts -type f -name '*.md' -print -exec git log --format=%ai -- {} \;
+  do_run find pages _posts -type f -name '*.md' -print -exec git log --format=%ci -- {} \;
 
   # Be sure the 'vendor/' folder is excluded, 
   # otherwise a strage error occurs.
