@@ -23,7 +23,7 @@ IFS=$'\n\t'
 
 # -----------------------------------------------------------------------------
 
-export slug="${build}/${TRAVIS_REPO_SLUG}-full"
+export slug="${TRAVIS_BUILD_DIR}-full"
 export site="${HOME}/out/${GITHUB_DEST_REPO}"
 
 # -----------------------------------------------------------------------------
