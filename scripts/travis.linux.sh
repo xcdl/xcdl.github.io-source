@@ -23,6 +23,7 @@ IFS=$'\n\t'
 
 # -----------------------------------------------------------------------------
 
+export slug="${build}/${TRAVIS_REPO_SLUG}-full"
 export site="${HOME}/out/${GITHUB_DEST_REPO}"
 
 # -----------------------------------------------------------------------------
@@ -63,9 +64,8 @@ function do_before_script() {
 
   # Clone again the repository, without the 50 commit limit, 
   # otherwise the last-modified-at will fail. (weird!)
-  do_run rm -rf "${TRAVIS_BUILD_DIR}"
-  do_run git clone --branch=${TRAVIS_BRANCH} https://github.com/${TRAVIS_REPO_SLUG}.git "${TRAVIS_BUILD_DIR}"
-  cd "${TRAVIS_BUILD_DIR}"
+  do_run git clone --branch=${TRAVIS_BRANCH} https://github.com/${TRAVIS_REPO_SLUG}.git "${slug}"
+  cd "${slug}"
   do_run git checkout ${TRAVIS_COMMIT}
   do_run git submodule update --init --recursive
 
@@ -80,7 +80,7 @@ function do_script() {
 
   echo "The main test code; perform the Jekyll build..."
 
-  cd "${TRAVIS_BUILD_DIR}"
+  cd "${slug}"
 
   do_run find pages _posts -type f -name '*.md' -print -exec git log --format=%ci -- {} \;
 
