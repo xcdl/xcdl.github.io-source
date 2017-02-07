@@ -69,6 +69,15 @@ function do_before_script() {
   cd /tmp/xcdl.github.io-source.git
   do_run find pages _posts -type f -name '*.md' -print -exec git log --format=%ci -- {} \;
 
+  do_run git clone --branch=master https://github.com/xcdl/xcdl.github.io-source.git /tmp/xcdl.github.io-source-2.git
+  cd /tmp/xcdl.github.io-source2.git
+  do_run find pages _posts -type f -name '*.md' -print -exec git log --format=%ci -- {} \;
+
+  do_run git clone --branch=master https://github.com/xcdl/xcdl.github.io-source.git /tmp/xcdl.github.io-source-3.git
+  cd /tmp/xcdl.github.io-source3.git
+  do_run git checkout ${TRAVIS_COMMIT}
+  do_run find pages _posts -type f -name '*.md' -print -exec git log --format=%ci -- {} \;
+
   cd "${HOME}"
 
   do_run git config --global user.email "${GIT_COMMIT_USER_EMAIL}"
