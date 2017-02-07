@@ -52,6 +52,7 @@ module Jekyll
             '--git-dir',
             top_level_git_directory,
             'log',
+            '--format="%ci"',
             '--',
             relative_path_from_git_dir
           )
