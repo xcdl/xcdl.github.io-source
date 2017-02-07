@@ -70,11 +70,11 @@ function do_before_script() {
   do_run find pages _posts -type f -name '*.md' -print -exec git log --format=%ci -- {} \;
 
   do_run git clone --branch=master https://github.com/xcdl/xcdl.github.io-source.git /tmp/xcdl.github.io-source-2.git
-  cd /tmp/xcdl.github.io-source2.git
+  cd /tmp/xcdl.github.io-source-2.git
   do_run find pages _posts -type f -name '*.md' -print -exec git log --format=%ci -- {} \;
 
   do_run git clone --branch=master https://github.com/xcdl/xcdl.github.io-source.git /tmp/xcdl.github.io-source-3.git
-  cd /tmp/xcdl.github.io-source3.git
+  cd /tmp/xcdl.github.io-source-3.git
   do_run git checkout ${TRAVIS_COMMIT}
   do_run find pages _posts -type f -name '*.md' -print -exec git log --format=%ci -- {} \;
 
