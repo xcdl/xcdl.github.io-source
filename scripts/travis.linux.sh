@@ -66,7 +66,7 @@ function do_before_script() {
   # otherwise the last-modified-at will fail. (weird!)
   do_run git clone --branch=${TRAVIS_BRANCH} https://github.com/${TRAVIS_REPO_SLUG}.git "${slug}"
   cd "${slug}"
-  do_run git checkout ${TRAVIS_COMMIT}
+  do_run git checkout -qf ${TRAVIS_COMMIT}
   do_run git submodule update --init --recursive
 
   # Clone the destination repo.
@@ -82,8 +82,6 @@ function do_script() {
 
   cd "${slug}"
 
-  do_run find pages _posts -type f -name '*.md' -print -exec git log --format=%ci -- {} \;
-
   # Be sure the 'vendor/' folder is excluded, 
   # otherwise a strage error occurs.
   do_run bundle exec jekyll build --destination "${site}"
@@ -96,7 +94,7 @@ function do_script() {
   "${site}"
 
   # ---------------------------------------------------------------------------
-  # The deployment code is present here not in after_success, 
+  # The deployment code is present here and not in after_success, 
   # to break the build if not successful.
 
   cd "${site}"
@@ -126,12 +124,6 @@ function do_script() {
   do_run git add --all .
   do_run git commit -m "Travis CI Deploy of ${TRAVIS_COMMIT}" 
  
-  # git status
-
-  # Temporarily disable deployment, due to 
-  # - inconsistent results from jekyll-last-modified-at.
-  return 0
-
   echo "Deploy to GitHub pages..."
 
   # Must be quiet and have no output, to not reveal the key.
