@@ -21,9 +21,6 @@ IFS=$'\n\t'
 
 # https://docs.travis-ci.com/user/environment-variables/#Default-Environment-Variables
 
-export build="${HOME}/build"
-export slug="${build}/${TRAVIS_REPO_SLUG}"
-
 # -----------------------------------------------------------------------------
 
 export site="${HOME}/out/${GITHUB_DEST_REPO}"
@@ -46,11 +43,6 @@ function do_before_install() {
 
   echo "Before install, bring extra tools..."
 
-  # do_run add-apt-repository ppa:git-core/ppa
-  # do_run apt-get update
-  # do_run apt-get install git
-  # do_run git --version
-
   cd "${HOME}"
 
   do_run gem install html-proofer
@@ -63,20 +55,6 @@ function do_before_install() {
 function do_before_script() {
 
   echo "Before starting the test, clone the destination repo..."
-
-  do_run date
-  do_run git clone https://github.com/xcdl/xcdl.github.io-source.git /tmp/xcdl.github.io-source.git
-  cd /tmp/xcdl.github.io-source.git
-  do_run find pages _posts -type f -name '*.md' -print -exec git log --format=%ci -- {} \;
-
-  do_run git clone --branch=master https://github.com/xcdl/xcdl.github.io-source.git /tmp/xcdl.github.io-source-2.git
-  cd /tmp/xcdl.github.io-source-2.git
-  do_run find pages _posts -type f -name '*.md' -print -exec git log --format=%ci -- {} \;
-
-  do_run git clone --branch=master https://github.com/xcdl/xcdl.github.io-source.git /tmp/xcdl.github.io-source-3.git
-  cd /tmp/xcdl.github.io-source-3.git
-  do_run git checkout ${TRAVIS_COMMIT}
-  do_run find pages _posts -type f -name '*.md' -print -exec git log --format=%ci -- {} \;
 
   cd "${HOME}"
 
@@ -93,7 +71,15 @@ function do_script() {
 
   echo "The main test code; perform the Jekyll build..."
 
-  cd "${slug}"
+  # Clone again the repository, without the 50 commit limit, 
+  # otherwise the last-modified-at will fail. (weird!)
+  do_run rm -rf cd "${TRAVIS_BUILD_DIR}"
+  do_run git clone --branch=${TRAVIS_BRANCH} https://github.com/${TRAVIS_REPO_SLUG}.git "${TRAVIS_BUILD_DIR}"
+  cd "${TRAVIS_BUILD_DIR}"
+  do_run git checkout ${TRAVIS_COMMIT}
+  do_run git submodule update --init --recursive
+
+  cd "${TRAVIS_BUILD_DIR}"
 
   do_run find pages _posts -type f -name '*.md' -print -exec git log --format=%ci -- {} \;
 
@@ -117,6 +103,12 @@ function do_script() {
   if [ "${TRAVIS_BRANCH}" != "master" ]
   then 
     echo "Not on master branch, skip deploy."
+    return 0; 
+  fi
+
+  if [ "${TRAVIS_PULL_REQUEST}" != "false" ]
+  then 
+    echo "A pull request, skip deploy."
     return 0; 
   fi
 
