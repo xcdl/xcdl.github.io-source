@@ -61,6 +61,15 @@ function do_before_script() {
   do_run git config --global user.email "${GIT_COMMIT_USER_EMAIL}"
   do_run git config --global user.name "${GIT_COMMIT_USER_NAME}"
 
+  # Clone again the repository, without the 50 commit limit, 
+  # otherwise the last-modified-at will fail. (weird!)
+  do_run rm -rf "${TRAVIS_BUILD_DIR}"
+  do_run git clone --branch=${TRAVIS_BRANCH} https://github.com/${TRAVIS_REPO_SLUG}.git "${TRAVIS_BUILD_DIR}"
+  cd "${TRAVIS_BUILD_DIR}"
+  do_run git checkout ${TRAVIS_COMMIT}
+  do_run git submodule update --init --recursive
+
+  # Clone the destination repo.
   do_run git clone --branch=master https://github.com/${GITHUB_DEST_REPO}.git "${site}"
 
   return 0
@@ -70,14 +79,6 @@ function do_before_script() {
 function do_script() {
 
   echo "The main test code; perform the Jekyll build..."
-
-  # Clone again the repository, without the 50 commit limit, 
-  # otherwise the last-modified-at will fail. (weird!)
-  do_run rm -rf "${TRAVIS_BUILD_DIR}"
-  do_run git clone --branch=${TRAVIS_BRANCH} https://github.com/${TRAVIS_REPO_SLUG}.git "${TRAVIS_BUILD_DIR}"
-  cd "${TRAVIS_BUILD_DIR}"
-  do_run git checkout ${TRAVIS_COMMIT}
-  do_run git submodule update --init --recursive
 
   cd "${TRAVIS_BUILD_DIR}"
 
