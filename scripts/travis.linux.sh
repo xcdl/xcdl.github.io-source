@@ -46,6 +46,11 @@ function do_before_install() {
 
   echo "Before install, bring extra tools..."
 
+  do_run add-apt-repository ppa:git-core/ppa
+  do_run  apt-get update
+  do_run  apt-get install git
+  do_run git --version
+
   cd "${HOME}"
 
   do_run gem install html-proofer
@@ -76,7 +81,7 @@ function do_script() {
 
   cd "${slug}"
 
-  find pages _posts -type f -name '*.md' -print -exec git log --format=%ai -- {} \;
+  do_run find pages _posts -type f -name '*.md' -print -exec git log --format=%ai -- {} \;
 
   # Be sure the 'vendor/' folder is excluded, 
   # otherwise a strage error occurs.
