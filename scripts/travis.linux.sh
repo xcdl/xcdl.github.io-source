@@ -73,7 +73,7 @@ function do_script() {
 
   # Clone again the repository, without the 50 commit limit, 
   # otherwise the last-modified-at will fail. (weird!)
-  do_run rm -rf cd "${TRAVIS_BUILD_DIR}"
+  do_run rm -rf "${TRAVIS_BUILD_DIR}"
   do_run git clone --branch=${TRAVIS_BRANCH} https://github.com/${TRAVIS_REPO_SLUG}.git "${TRAVIS_BUILD_DIR}"
   cd "${TRAVIS_BUILD_DIR}"
   do_run git checkout ${TRAVIS_COMMIT}
