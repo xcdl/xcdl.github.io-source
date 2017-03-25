@@ -27,6 +27,11 @@ env:
 #    packages:
 #      - ...
 
+notifications:
+  email:
+    on_success: always # default: change
+    on_failure: always # default: always
+
 before_install:
   - bash scripts/travis.linux.sh before_install
 
