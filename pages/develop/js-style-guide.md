@@ -252,10 +252,15 @@ In addition, you can use the `super` keyword to call methods on an object’s pr
 
 ## Links to other style guides
 
+Prefered:
+
+- [JavaScript "Standard" Style](https://standardjs.com)
+
+Other links:
+
 - [10 Best JavaScript Style Guides](http://noeticforce.com/best-javascript-style-guide-for-maintainable-code)
 - [airbnb JavaScript Style Guide](https://github.com/airbnb/javascript)
 - [Idiomatic.js JavaScript Style Guide](https://github.com/rwaldron/idiomatic.js/)
-- [JavaScript "Standard" Style](https://standardjs.com)
 - [Google ES6 Style Guide](https://google.github.io/styleguide/jsguide.html)
 - [Crockford Code Conventions for the JavaScript Programming Language](http://javascript.crockford.com/code.html)
 - [felixge/node-style-guide](https://github.com/felixge/node-style-guide)
@@ -263,6 +268,11 @@ In addition, you can use the `super` keyword to call methods on an object’s pr
 
 ## Linting Tools
 
-- [A Comparison of JavaScript Linting Tools](https://www.sitepoint.com/comparison-javascript-linting-tools/)
+Prefered (used automatically by Standard):
+
 - [ESLint](http://eslint.org/)
+
+Other links:
+
+- [A Comparison of JavaScript Linting Tools](https://www.sitepoint.com/comparison-javascript-linting-tools/)
 - [JSHint](http://www.jshint.com/)
