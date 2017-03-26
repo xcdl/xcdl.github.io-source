@@ -39,6 +39,10 @@ kramdown:
   input: GFM
   syntax_highlighter: rouge
 
+# Jekyll recommends https://github.com/mojombo/tpw/blob/master/css/syntax.css
+# I prefered to copy styled from routege stylesheet (http://rouge.jneen.net)
+highlighter: rouge
+
 # Warning: paginator retired in Jekyll 3!
 # Make this larger, probably 5 is a good choice.
 # paginate: 2
@@ -84,7 +88,8 @@ tocTopTag: h2
 minItemsToShowToc: 3
 useExistingAnchors: true
 
-css-date: 201510121951
+# UTC, down to second.
+css-date: 20170326122230
 
 # Content copyright. Update it to your needs.
 copyright-message: "© 2017 Liviu Ionescu"

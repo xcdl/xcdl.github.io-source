@@ -4,5 +4,6 @@
 {% include stylesheets/github-light.css %}
 {% include stylesheets/octicons.css %}
 {% include stylesheets/styles.css %}
+{% include stylesheets/syntax.css %}
 {% include stylesheets/footer.css %}
 {% include stylesheets/toc.css %}

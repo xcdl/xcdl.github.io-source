@@ -214,7 +214,7 @@ var notAPerson = Person.call(person, 'Michael')    // works!
 Block-level functions
 
 ```javascript
-'use strict';
+'use strict'
 
 if (true) {
   console.log(typeof doSomething) // throws an error
