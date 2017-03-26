@@ -19,7 +19,7 @@ Indentation is **two spaces**
 
 Curly braces belong on the same line
 
-``` js
+```javascript
 const f = function () {
   while (foo) {
     bar()
@@ -31,17 +31,16 @@ const f = function () {
 
 Don't use semicolons, except when required; for example to prevent the expression from being interpreted as a function call or property access, respectively.
 
-``` js
+```javascript
 ;(x || y).doSomething()
 ;[a, b, c].forEach(doSomething)
-
 ```
 
 ### Comma first
 
 Put the **comma at the start** of the next line, directly below the token that starts the list
 
-``` js
+```javascript
 const magicWords = [ 'abracadabra'
                  , 'gesundheit'
                  , 'ventrilo'
@@ -59,7 +58,7 @@ const magicWords = [ 'abracadabra'
 
 Use single quotes for strings except to avoid escaping
 
-``` js
+```javascript
 const ok = 'String contains "double" quotes'
 const alsoOk = "String contains 'single' quotes or apostrophe"
 const paramOk = `Back quotes string with ${parameter}`
@@ -101,7 +100,7 @@ When using callbacks, never to ever ever throw anything. It's worse than useless
 
 To add functions and objects to the root of your module, you can add them to the special `exports` object:
 
-``` js
+```javascript
 const PI = Math.PI
 exports.area = (r) => PI * r * r
 exports.circumference = (r) => 2 * PI * r
@@ -109,7 +108,7 @@ exports.circumference = (r) => 2 * PI * r
 
 If you want the root of your module's export to be a function (such as a constructor) or if you want to export a complete object in one assignment instead of building it one property at a time, assign it to `module.exports` instead of `exports`.
 
-``` js
+```javascript
 const square = require('./square.js')
 const mySquare = square(2)
 console.log(`The area of my square is ${mySquare.area()}`)
@@ -126,7 +125,7 @@ module.exports = (width) => {
 
 When a file is run directly from Node.js, require.main is set to its module. That means that you can determine whether a file has been run directly by testing
 
-``` js
+```javascript
 require.main === module
 ```
 
@@ -140,7 +139,7 @@ Multiple calls to require('foo') may not cause the module code to be executed mu
 
 Before a module's code is executed, Node.js will wrap it with a function wrapper that looks like the following:
 
-``` js
+```javascript
 (function (exports, require, module, __filename, __dirname) {
   // Your module code actually lives in here
 });
@@ -166,7 +165,7 @@ Use `const` by default, and only use `let` when you know a variable’s value ne
 
 Use default parameters.
 
-``` js
+```javascript
 const makeRequest = function (url, timeout = 2000, callback = function() {}) {
   // the rest of the function
 }
@@ -178,7 +177,7 @@ const add = function (first, second = getValue(first)) {
 
 Use _rest_ parameters.
 
-``` js
+```javascript
 const pick = function (object, ...keys) {
   let result = Object.create(null)
   for (let i = 0, len = keys.length; i < len; i++) {
@@ -190,7 +189,7 @@ const pick = function (object, ...keys) {
 
 The `Function` constructor.
 
-``` js
+```javascript
 var add = new Function("first", 'second = first',
                  'return first + second')
 console.log(add(1, 1))     // 2
@@ -200,7 +199,7 @@ console.log(add(1))        // 2
 JavaScript has two different internal-only methods for functions: `[[Call]]` and `[[Construct]]`. When a function is called without new, the `[[Call]]` method is executed, which executes the body of the function as it appears in the code. When a function is called with new, that’s when the `[[Construct]]` method
 is called. The `[[Construct]]` method is responsible for creating a new object, called the instance, and then executing the function body with this set to the instance. Functions that have a `[[Construct]]` method are called constructors.
 
-``` js
+```javascript
 const Person = function (name) {
   if (this instanceof Person) {
     this.name = name
@@ -214,7 +213,7 @@ var notAPerson = Person.call(person, 'Michael')    // works!
 
 Block-level functions
 
-``` js
+```javascript
 'use strict';
 
 if (true) {
@@ -236,7 +235,7 @@ Arrow functions are functions defined with a new syntax that uses an arrow (`=>`
 - **No arguments object** Because arrow functions have no arguments binding, you must rely on named and rest parameters to access function arguments.
 - **No duplicate named parameters** Arrow functions cannot have duplicate named parameters in strict or non-strict mode, as opposed to non-arrow functions, which cannot have duplicate named parameters only in strict mode.
 
-``` js
+```javascript
 let sum = (num1, num2) => num1 + num2
 // effectively equivalent to:
 let sum = function(num1, num2) {
