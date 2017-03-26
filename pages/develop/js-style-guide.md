@@ -94,7 +94,7 @@ Use named functions.
 
 When using callbacks, never to ever ever throw anything. It's worse than useless. Just send the error message back as the first argument to the callback.
 
-## From [node.js modules](https://nodejs.org/dist/latest-v6.x/docs/api/modules.html)
+## From [Node.js modules](https://nodejs.org/dist/latest-v6.x/docs/api/modules.html)
 
 ### Modules
 
@@ -123,7 +123,7 @@ module.exports = (width) => {
 
 ### Accessing the main module
 
-When a file is run directly from Node.js, require.main is set to its module. That means that you can determine whether a file has been run directly by testing
+When a file is run directly from Node.js, `require.main` is set to its module. That means that you can determine whether a file has been run directly by testing
 
 ```javascript
 require.main === module
@@ -145,7 +145,7 @@ Before a module's code is executed, Node.js will wrap it with a function wrapper
 });
 ```
 
-In each module, the module free variable is a reference to the object representing the current module. For convenience, `module.exports` is also accessible via the exports module-global. module isn't actually a global but rather local to each module.
+In each module, the `module` free variable is a reference to the object representing the current module. For convenience, `module.exports` is also accessible via the `exports` module-global. `module` isn't actually a global but rather local to each module.
 
 The `module.exports` object is created by the Module system. Sometimes this is not acceptable; many want their module to be an instance of some class. To do this, assign the desired export object to `module.exports`. Note that assigning the desired object to `exports` will simply rebind the local exports variable, which is probably not what you want to do.
 
@@ -154,6 +154,27 @@ Note that assignment to `module.exports` must be done immediately. It cannot be 
 The `exports` variable that is available within a module starts as a reference to `module.exports`. As with any variable, if you assign a new value to it, it is no longer bound to the previous value.
 
 As a guideline, if the relationship between `exports` and `module.exports` seems like magic to you, ignore `exports` and only use `module.exports`.
+
+## Make node exports/imports look like ES6 exports/imports
+
+In EC6, export/import would look like:
+
+```javascript
+export class WscriptAvoider { ... }
+...
+import { WscriptAvoider } from 'wscript-avoider.js'
+```
+
+So, to stay close to this syntax, my personal preference for Node.js modules is to preserve the original object, and add members to it, preferably classes, even if they have only static members.
+
+To use them, the syntax is with the explicit classs name:
+
+```javascript
+const WscriptAvoider = require('wscript-avoider').WscriptAvoider
+WscriptAvoider.quitIfWscript(appName)
+```
+
+In case the class is not static, instantiate it as usual.
 
 ## From _Understanding ECMAScript 6_
 
