@@ -287,27 +287,27 @@ These are really objects, available in all modules. (see Node.js [Globals](https
 
 ### Prefer ES6 solutions
 
-This is Rule no. 1, that overrides all other rules. Definitely avoid using old style code.
+This is Rule no. 1, that overrides all other rules. Definitely **avoid using old style code**.
 
 ### Use classes as much as possible
 
-Even if the new syntax is mostly syntactic sugar, and internally things behave as strangly as they did in the first JavaScript versions, still use the new syntax at large; it is much cleaner and improves readability.
+Even if the new syntax is mostly syntactic sugar, and internally things behave as strangly as they did in the first JavaScript versions, still **use the new class syntax** at large; it is much cleaner and improves readability.
 
 ### Use promises instead of callbacks
 
-Really. No callbacks at all.
+Really. No callbacks at all. Use promises.
 
 ### Use async/await for anynchronous calls
 
 Once `async`/`await` became standard, and the V8 engine added support for them, there is no reason for not using `async`/`await`.
 
-Wrap old legacy code using callbacks into promises and execute them with `await`.
+**Wrap old legacy code using callbacks into promises** and execute them with `await`.
 
-### Use static class members instead of variables at module level
+### Use static class members for sharing
 
 Modules are singletons; using module variables is like using static variables in a multi-threaded environment; they may provide a way of sharing common data between multiple instances of objects created inside the same module, but if not handled correctly this may have unexpected results. 
 
-The general recommendation is to make the modules reentrant. In practical terms, **do not** use module-global variables at all; make the module export a class, and create instances of it whenever needed; for sharing data between instances, use static class members.
+The general recommendation is to **make the modules reentrant**. In practical terms, **do not use module-global variables** at all; make the module **export a class, and create instances of it** whenever needed; for sharing data between instances, **use static class members**.
 
 ### Do not restrict export to a single function or class
 
@@ -336,13 +336,13 @@ The recommendation is to always return functions or preferably classes as proper
 
 ### Prefer static classes to group methods
 
-Prepare your module to export multiple functions, grouped by functionality either by a parent object, or, even better, by classes with static members.
+Prepare your module to export multiple functions; group them (by functionality) either below a parent object, or, even better, in classes with static members.
 
-Adding new exports will only change the interface incrementaly, minimising the risk to break backward compatibility.
+The main advantage of this scheme is that adding new exports will only change the interface incrementaly, minimising the risk to break backward compatibility.
 
 ## Make node exports/imports look like ES6 exports/imports
 
-Assuming classes are prefered, in EC6, export/import would look like:
+Assuming classes are prefered, the EC6 syntax for export/import would look like:
 
 ```javascript
 export class WscriptAvoider { ... }
