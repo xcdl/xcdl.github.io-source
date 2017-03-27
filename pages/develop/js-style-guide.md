@@ -5,9 +5,18 @@ title: JavaScript Style Guide
 author: Liviu Ionescu
 ---
 
-The actual style guide used consistently across all xPack JavaScript source files is enforced by using the [Standard JS](https://standardjs.com) validation tools.
+After many years dealing with style guides for various languages, the conclusion is that the style itself is less important than applying it consistently. 
 
-In short, the main recommandations are to make the module asyncronous, to use promises (and avoid callbacks), and be sure reentrancy is considered.
+So, for the xPack JavaScript source files to be consistent, the first requirement is to pass the [Standard JS](https://standardjs.com) validation tools.
+
+After this, the main recommendations are:
+
+- use the **ECMAScript 6** specifications (ES 6),
+- if the module does something reasonably complex, the module public functions **must be asyncronous**, 
+- asynchronous functions must **use promises** (and definitely **avoid callbacks**), 
+- **reentrancy** should be seriously considered (avoid module-global variables).
+
+<div style="clear: both;"></div>
 
 ## From _Understanding ECMAScript 6_
 
