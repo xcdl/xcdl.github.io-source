@@ -5,7 +5,7 @@ title: JavaScript Style Guide
 author: Liviu Ionescu
 ---
 
-The actual style guide used consistently across all xPack JavaScript source files is enforced by using the [Standard JS]((https://standardjs.com) validation tools.
+The actual style guide used consistently across all xPack JavaScript source files is enforced by using the [Standard JS](https://standardjs.com) validation tools.
 
 In short, the main recommandations are to make the module asyncronous, to use promises (and avoid callbacks), and be sure reentrancy is considered.
 
@@ -194,7 +194,9 @@ Use named functions.
 
 ### Exceptions
 
-When using callbacks, never to ever ever throw anything. It's worse than useless. Just send the error message back as the first argument to the callback.
+For the native Node.js callback usage, never to ever ever throw anything. It's worse than useless. Just send the error message back as the first argument to the callback.
+
+But for the modern ES 6 promise usage, exceptions are fine.
 
 ## From [Node.js modules](https://nodejs.org/dist/latest-v6.x/docs/api/modules.html)
 
@@ -202,42 +204,41 @@ When using callbacks, never to ever ever throw anything. It's worse than useless
 
 Modules are a way of preventing multiple JavaScript units to polute the global namespace.
 
-Objects defined at root level in a module are not global, but belong to the module. 
+Objects defined at root level in a module are not global, but belong to the module; the usual name for this is _module-global_. 
 
 ### Caching
 
-Modules are cached after the first time they are loaded. This means (among other things) that every call to require('foo') will get exactly the same object returned, if it would resolve to the same file.
+Modules are cached after the first time they are loaded. This means (among other things) that every call to require('foo') will get exactly the same object returned, if it would resolve to the same file. Multiple calls to `require('foo')` will not cause the module code to be executed multiple times.
 
-Multiple calls to require('foo') may not cause the module code to be executed multiple times.
+From this point of view, modules behave like [singletons](https://en.wikipedia.org/wiki/Singleton_pattern); they can also be compared to static classes in C++.
 
-From this point of view, modules behave like [singletons](https://en.wikipedia.org/wiki/Singleton_pattern); they can also be compared with static lasses in C++.
-
-Leaving status at the module level can be either a blessing or a curse, depending on the environment used to run the module. In server environments, using module variables is like using static variables in a multi-threaded environment, if not handled correctly it may have unexpected results.
+Leaving status at the module level can be either a blessing or a curse, depending on the environment used to run the module. In server environments, using module-global variables is like using static variables in a multi-threaded environment, if not handled correctly it may have unexpected results.
 
 ### Exports 
 
-To add functions and objects to the root of your module, you can add them to the special `modules.exports` object:
+To make some functions and objects visible outside the module, you can add them as properties to the special `modules.exports` object:
 
 ```javascript
 const PI = Math.PI
 module.exports.area = (r) => PI * r * r
-modules.exports.circumference = (r) => 2 * PI * r
+module.exports.circumference = (r) => 2 * PI * r
 ```
 
-If you want the root of your module's export to be a function (such as a constructor) or if you want to export a complete object in one assignment instead of building it one property at a time, assign it to `module.exports` instead of `exports` (ilg: not recommended).
+Although you can rewrite the `module.export` to be a sinle function (such as a constructor), still prefer to add them as properties to the object and refer to them explicitly in the `require()` line:
 
 ```javascript
-const square = require('./square.js')
+const square = require('./square.js').square
 const mySquare = square(2)
 console.log(`The area of my square is ${mySquare.area()}`)
 
-// assigning to exports will not modify module, must use module.exports
-module.exports = (width) => {
+module.exports.area = (width) => {
   return {
     area: () => width * width
   }
 }
 ```
+
+If you want to export a complete object in one assignment instead of building it one property at a time, assign it to `module.exports`.
 
 ### Accessing the main module
 
@@ -264,7 +265,7 @@ __dirname = '/x/y/z'
 
 In each module, the `module` variable is a reference to the object representing the current module. `module` isn't actually a global but rather local to each module.
 
-The `module.exports` object is created by the Module system. Sometimes this is not acceptable; many want their module to be an instance of some class. To do this, assign the desired export object to `module.exports` (ilg: not recommended). 
+The `module.exports` object is created by the Module system. Sometimes this is not acceptable; many want their module to be an object of their own. To do this, assign the desired export object to `module.exports`. 
 
 For convenience, `module.exports` is also accessible via the `exports` module-global. Note that assigning a value to `exports` will simply rebind the local exports variable, which is probably not what you want to do; if the relationship between `exports` and `module.exports` seems like magic to you, ignore `exports` and only use `module.exports`.
 
@@ -272,7 +273,7 @@ Note that assignment to `module.exports` must be done immediately. It cannot be 
 
 ### Global objects
 
-These objects are available in all modules. (see Node.js [Globals](https://nodejs.org/api/globals.html))
+These are really objects, available in all modules. (see Node.js [Globals](https://nodejs.org/api/globals.html))
 
 - `global`
 - `process`
@@ -298,15 +299,15 @@ Really. No callbacks at all.
 
 ### Use async/await for anynchronous calls
 
-Once `async`/`await` became standard, and the V8 engine supports them, there is no reason for not using them.
+Once `async`/`await` became standard, and the V8 engine added support for them, there is no reason for not using `async`/`await`.
 
 Wrap old legacy code using callbacks into promises and execute them with `await`.
 
 ### Use static class members instead of variables at module level
 
-Modules are singletons; using module variables is like using static variables in a multi-threaded environment; they may provide a way of sharing common data between multiple instances of objects created inside the same module, but if not handled correctly it may have unexpected results. 
+Modules are singletons; using module variables is like using static variables in a multi-threaded environment; they may provide a way of sharing common data between multiple instances of objects created inside the same module, but if not handled correctly this may have unexpected results. 
 
-The general recommendation is to make the modules reentrant. In practical terms, **do not** use module variables at all; make the module export a class, and create instances of it whenever needed; for sharing data between instances, use static class members.
+The general recommendation is to make the modules reentrant. In practical terms, **do not** use module-global variables at all; make the module export a class, and create instances of it whenever needed; for sharing data between instances, use static class members.
 
 ### Do not restrict export to a single function or class
 
@@ -320,7 +321,7 @@ module.exports = function () {
 const func = require('name')
 ```
 
-Apart from being unnamed, returning a single function prevents future extensions, for example exporting a second function from the module would mandate all modules that refer to the first function via `require()` to be updated to `require().func1`, which may cause many headaches to developers.
+Apart from being unnamed, returning a single function prevents future extensions, for example exporting a second function from the same module would mandate all modules that use the first function via `require()` to be updated to `require().func1`, which may cause many headaches to developers.
 
 ```javascript
 module.exports.func1 = function () {
@@ -331,13 +332,13 @@ module.exports.func2 = function () { ... }
 const func = require('name').func1
 ```
 
-The recommendation is to always return functions or preferably classes as members of the `module.exports` object, and get them individually by name.
+The recommendation is to always return functions or preferably classes as properties of the `module.exports` object, and get them individually by name.
 
 ### Prefer static classes to group methods
 
 Prepare your module to export multiple functions, grouped by functionality either by a parent object, or, even better, by classes with static members.
 
-Addint new exports will change the interface incrementaly, minimising the risk to break backward compatibility.
+Adding new exports will only change the interface incrementaly, minimising the risk to break backward compatibility.
 
 ## Make node exports/imports look like ES6 exports/imports
 
@@ -349,7 +350,7 @@ export class WscriptAvoider { ... }
 import { WscriptAvoider } from 'wscript-avoider.js'
 ```
 
-So, to stay close to this syntax, my personal preference for Node.js modules is to preserve the original `module.exports` object, and add members to it, preferably classes, even if they have only static members.
+So, to stay close to this syntax, the recommendation is to preserve the original `module.exports` object, and add properties to it, preferably classes, even if they have only static members.
 
 To import them, the syntax uses the explicit classs name:
 
@@ -387,7 +388,7 @@ Other links:
 
 Prefered (used automatically by Standard):
 
-- [ESLint](http://eslint.org/)
+- [ESLint](http://eslint.org/), but indirectly via the 'Standard JS' tools.
 
 Other links:
 
