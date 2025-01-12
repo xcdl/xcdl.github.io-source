@@ -1,17 +1,34 @@
 source "https://rubygems.org"
 
-gem 'jekyll', '=3.2.1', :platforms => [:ruby, :x64_mingw, :mswin]
-gem 'wdm', '>= 0.1.0' if Gem.win_platform?
+# to publish on github page
+gem 'github-pages', group: :jekyll_plugins
+
+# to publish without github page
+# gem 'jekyll', '=4.2.2'
 
 group :jekyll_plugins do
-  gem 'jekyll-watch'
-  gem 'jemoji'
-  gem 'jekyll-paginate'
-  gem 'jekyll-last-modified-at', '>=1.0.0',  :platforms => [:ruby, :x64_mingw, :mswin]
-  gem 'jekyll-mentions', '=1.1.3',  :platforms => [:ruby, :x64_mingw, :mswin]
-  gem 'jekyll-redirect-from', '=0.11.0',  :platforms => [:ruby, :x64_mingw, :mswin]
-  gem 'jekyll-sitemap', '=0.11.0',  :platforms => [:ruby, :x64_mingw, :mswin]
-  # gem 'jekyll-multiple-languages'
+    gem 'jekyll-sitemap', '>=1.4.0'
 
-  gem 'html-proofer'
-end
+    # Not used, explicit feed.xml.
+    gem 'jekyll-feed', '>=0.13.0'
+    gem 'jekyll-seo-tag', '>=2.6.1'
+
+    gem 'kramdown-parser-gfm', '>=1.1.0'
+
+    # https://github.com/gjtorikian/jekyll-last-modified-at
+    gem 'jekyll-last-modified-at', '>=1.1.0'
+
+    # https://github.com/jekyll/jekyll-redirect-from
+    gem 'jekyll-redirect-from', '>=0.16.0'
+
+    # https://github.com/dafi/jekyll-toc-generator
+    # gem 'jekyll-toc-generator' # Does not exist
+
+    # https://github.com/toshimaru/jekyll-toc
+    # gem 'jekyll-toc'
+
+    gem 'html-proofer'
+    # gem 'nokogiri', '>=1.8.2'
+
+    gem 'webrick'
+  end

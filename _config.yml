@@ -40,7 +40,7 @@ kramdown:
   syntax_highlighter: rouge
 
 # Jekyll recommends https://github.com/mojombo/tpw/blob/master/css/syntax.css
-# I prefered to copy styled from routege stylesheet (http://rouge.jneen.net)
+# I preferred to copy styled from routege stylesheet (http://rouge.jneen.net)
 highlighter: rouge
 
 # Warning: paginator retired in Jekyll 3!
@@ -65,6 +65,21 @@ gems:
   - jekyll-sitemap
   - jekyll-paginate
 
+# Not functional, commented out.
+# https://github.com/toshimaru/jekyll-toc
+# plugins:
+#   - jekyll-toc
+
+# toc:
+#   min_level: 2 # default: 1
+#   max_level: 3 # default: 6
+
+# defaults:
+#   - scope:
+#       path: ""
+#     values:
+#       toc: true
+
 # Custom definitions.
 
 # References to the project associated with the web.
@@ -84,9 +99,9 @@ google-analytics-id: UA-16767008-13
 # custom-footer-content: content/site-custom-footer.markdown
 
 # jekyll-toc-generator
-tocTopTag: h2
-minItemsToShowToc: 3
-useExistingAnchors: true
+# tocTopTag: h2
+# minItemsToShowToc: 3
+# useExistingAnchors: true
 
 # UTC, down to second.
 css-date: 20170326122230
