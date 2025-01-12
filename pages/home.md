@@ -5,6 +5,13 @@ permalink: /
 author: Liviu Ionescu
 ---
 
+## DEPRECATION Notice
+
+The **XCDL component framework** is now part of the
+[xPack Project](https://xpack.github.io), and
+the xCDL functionality is documented in the
+[xcdl](https://xpack.github.io/xcdl/) website.
+
 ## Introduction
 
 The [XCDL project](https://github.com/xcdl) defines and implements a component framework, as a set of metadata and a collection of tools specifically designed to configure and build complex, package based, multi-variant (multi-architecture, multi-board, multi-toolchain) embedded projects. It is inspired by eCos CDL and also incorporates some ARM CMSIS Pack concepts. The primary projects to benefit from XCDL are:
